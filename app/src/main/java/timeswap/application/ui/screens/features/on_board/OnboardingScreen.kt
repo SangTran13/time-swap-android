@@ -1,6 +1,7 @@
 package timeswap.application.ui.screens.features.on_board
 
 import timeswap.application.R.*
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

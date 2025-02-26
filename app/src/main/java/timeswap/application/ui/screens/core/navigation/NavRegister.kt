@@ -1,16 +1,20 @@
 package timeswap.application.ui.screens.core.navigation
 
 import android.content.Context
+
+import kotlinx.coroutines.delay
+
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.delay
+
 import timeswap.application.ui.screens.core.authentication.forgot_password.ForgotPasswordScreen
 import timeswap.application.ui.screens.core.authentication.login.LoginScreen
 import timeswap.application.ui.screens.core.authentication.register.RegisterScreen

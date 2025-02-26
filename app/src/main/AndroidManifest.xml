@@ -9,6 +9,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
+        android:roundIcon="@drawable/logo_1"
         android:theme="@style/Theme.TimeSwap"
         tools:targetApi="31">
 

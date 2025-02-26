@@ -1,9 +1,12 @@
 package timeswap.application.network.services
 
+import android.widget.Toast
+
+import org.json.JSONObject
+
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.Toast
-import org.json.JSONObject
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

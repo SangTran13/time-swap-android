@@ -9,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "timeSwap.application"
+        applicationId = "timeswap.application"
         minSdk = 24
         //noinspection OldTargetApi
         targetSdk = 34
@@ -41,6 +41,10 @@ android {
 
 dependencies {
 
+
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,13 +62,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
-    // Thư viện chứa bộ icon mở rộng cho Material Design trong Jetpack Compose
-    implementation(libs.androidx.material.icons.extended)
-
-    // Retrofit - Thư viện giúp gọi API dễ dàng hơn
-    implementation(libs.retrofit)
-
-    // Converter Gson cho Retrofit - Chuyển đổi JSON thành đối tượng Kotlin
-    implementation(libs.converter.gson)
 }
