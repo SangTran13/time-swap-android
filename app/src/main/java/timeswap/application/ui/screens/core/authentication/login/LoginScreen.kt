@@ -78,13 +78,6 @@ fun LoginScreen(
     val passwordFocusRequester = remember { FocusRequester() }
     val loginButtonFocusRequester = remember { FocusRequester() }
 
-    fun handleLogin() {
-        loginService.login(email, password, onSuccess = {
-            onNext()
-        }, onError = { errorMessage ->
-            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-        })
-    }
 
     fun saveRememberMe() {
         with(sharedPreferences.edit()) {
@@ -96,6 +89,15 @@ fun LoginScreen(
             putBoolean("remember_me", rememberMe)
             apply()
         }
+    }
+
+    fun handleLogin() {
+        loginService.login(email, password, onSuccess = {
+            saveRememberMe()
+            onNext()
+        }, onError = { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+        })
     }
 
     Box(
@@ -116,7 +118,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usermod temper",
                 fontSize = 18.sp,
                 color = Color.Gray,
                 textAlign = TextAlign.Center
