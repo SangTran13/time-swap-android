@@ -15,11 +15,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
+import timeswap.application.network.services.PaymentRepository
+import timeswap.application.network.services.UserRepository
 import timeswap.application.ui.screens.core.authentication.forgot_password.ForgotPasswordScreen
 import timeswap.application.ui.screens.core.authentication.login.LoginScreen
 import timeswap.application.ui.screens.core.authentication.register.RegisterScreen
 import timeswap.application.ui.screens.features.home.HomeScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
+import timeswap.application.ui.screens.features.payment.PaymentScreen
 import timeswap.application.ui.screens.features.splash.SplashScreen
 
 @Composable
@@ -57,11 +60,20 @@ fun NavRegister(context: Context) {
         }
         composable(HomeDestination.route) {
             HomeScreen(context = context, onLogout = {
-                sharedPreferences.edit().remove("accessToken").apply()
                 navController.navigate(LoginDestination.route) {
                     popUpTo(HomeDestination.route) { inclusive = true }
                 }
-            })
+            }, onNavigateToPayment = { navController.navigate(PaymentDestination.route) })
+        }
+        composable(PaymentDestination.route) {
+            PaymentScreen(sharedPreferences = sharedPreferences,
+                userRepository = UserRepository(),
+                paymentRepository = PaymentRepository(context),
+                onBackToHome = {
+                    navController.navigate(HomeDestination.route) {
+                        popUpTo(HomeDestination.route) { inclusive = true }
+                    }
+                })
         }
     }
 }
