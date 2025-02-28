@@ -43,6 +43,7 @@ dependencies {
 
 
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.coil.compose)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.core.ktx)

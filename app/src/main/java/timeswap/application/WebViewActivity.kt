@@ -13,7 +13,6 @@ import android.util.Log
 import android.widget.Toast
 
 import androidx.activity.ComponentActivity
-import androidx.activity.enableEdgeToEdge
 
 import timeswap.application.network.services.PaymentRepository
 
@@ -33,7 +32,6 @@ class WebViewActivity : ComponentActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         webView = WebView(this).apply {

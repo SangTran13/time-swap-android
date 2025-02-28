@@ -198,7 +198,7 @@ fun TransactionNoteField(
 fun PaymentMethodSelection(selectedMethod: Int, onSelect: (Int) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.Absolute.SpaceAround
     ) {
         PaymentMethodItem(R.drawable.payos_logo, "PayOS", selectedMethod == 1) { onSelect(1) }
         PaymentMethodItem(R.drawable.vnpay_logo, "VNPay", selectedMethod == 2) { onSelect(2) }
@@ -220,10 +220,11 @@ fun PaymentMethodItem(imageResId: Int, contentDescription: String, isSelected: B
             Icon(
                 painter = painterResource(id = imageResId),
                 contentDescription = contentDescription,
-                modifier = Modifier.size(60.dp),
+                modifier = Modifier.size(50.dp),
                 tint = Color.Unspecified
             )
         }
     }
 }
+
 
