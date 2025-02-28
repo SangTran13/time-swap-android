@@ -39,3 +39,13 @@ object PaymentDestination : Destination {
     override val route = "payment"
     override val title = "Payment"
 }
+
+object SettingsDestination : Destination {
+    override val route = "settings"
+    override val title = "Settings"
+}
+
+object JobDestination : Destination {
+    override val route = "job"
+    override val title = "Job"
+}

@@ -1,7 +1,5 @@
 package timeswap.application.ui.screens.features.splash
 
-import timeswap.application.R.*
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+import timeswap.application.R.drawable
 
 @Composable
 fun SplashScreen() {
