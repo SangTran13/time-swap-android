@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 
 import timeswap.application.network.services.PaymentRepository
 import timeswap.application.network.services.UserRepository
+import timeswap.application.ui.screens.core.authentication.change_password.ChangePasswordScreen
 import timeswap.application.ui.screens.core.authentication.forgot_password.ForgotPasswordScreen
 import timeswap.application.ui.screens.core.authentication.login.LoginScreen
 import timeswap.application.ui.screens.core.authentication.register.RegisterScreen
@@ -38,7 +39,9 @@ import timeswap.application.ui.screens.features.home.HomeScreen
 import timeswap.application.ui.screens.features.jobs.JobScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
 import timeswap.application.ui.screens.features.payment.PaymentScreen
+import timeswap.application.ui.screens.features.profiles.ProfileScreen
 import timeswap.application.ui.screens.features.splash.SplashScreen
+import timeswap.application.viewmodel.JobListViewModel
 
 @Composable
 fun NavRegister(context: Context) {
@@ -115,8 +118,8 @@ fun NavRegister(context: Context) {
                         userRepository = UserRepository(),
                         paymentRepository = PaymentRepository(context),
                         onBackToHome = {
-                            navController.navigate(HomeDestination.route) {
-                                popUpTo(HomeDestination.route) { inclusive = true }
+                            navController.navigate(SettingsDestination.route) {
+                                popUpTo(SettingsDestination.route) { inclusive = true }
                             }
                         }
                     )
@@ -125,7 +128,16 @@ fun NavRegister(context: Context) {
                     SettingsScreen(context = context, navController = navController)
                 }
                 composable(JobDestination.route) {
-                    JobScreen(navController = navController)
+                    JobScreen(navController = navController, viewModel = JobListViewModel())
+                }
+                composable(ChangePasswordDestination.route) {
+                    ChangePasswordScreen(
+                        onPasswordChanged = { navController.popBackStack() },
+                        onBackToHome = { navController.navigate(SettingsDestination.route) }
+                    )
+                }
+                composable(ProfileDestination.route) {
+                    ProfileScreen(navController = navController)
                 }
             }
         }

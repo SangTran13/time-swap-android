@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timeswap.application.network.services.AuthService
 import timeswap.application.network.services.PaymentService
 import timeswap.application.network.services.UserService
+import timeswap.application.network.services.JobService
 
 object RetrofitClient {
 
@@ -36,6 +37,10 @@ object RetrofitClient {
 
     val paymentService: PaymentService by lazy {
         apiRetrofit.create(PaymentService::class.java)
+    }
+
+    val jobService: JobService by lazy {
+        apiRetrofit.create(JobService::class.java)
     }
 
 }

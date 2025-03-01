@@ -22,8 +22,10 @@ import androidx.compose.ui.unit.sp
 
 import timeswap.application.R
 import timeswap.application.network.services.UserRepository
+import timeswap.application.ui.screens.core.navigation.ChangePasswordDestination
 import timeswap.application.ui.screens.core.navigation.LoginDestination
 import timeswap.application.ui.screens.core.navigation.PaymentDestination
+import timeswap.application.ui.screens.core.navigation.ProfileDestination
 
 @Composable
 fun SettingsScreen(context: Context, navController: NavController) {
@@ -63,9 +65,9 @@ fun SettingsScreen(context: Context, navController: NavController) {
 
             SettingItemWithValue(
                 icon = R.drawable.ic_profile,
-                title = "User",
+                title = "Profile",
                 value = fullName,
-                onClick = {}
+                onClick = { navController.navigate(ProfileDestination.route)}
             )
 
             SettingItemWithValue(
@@ -78,7 +80,7 @@ fun SettingsScreen(context: Context, navController: NavController) {
             SettingItem(
                 icon = R.drawable.ic_change_p,
                 title = "Change Password",
-                onClick = { /*  */ }
+                onClick = { navController.navigate(ChangePasswordDestination.route) }
             )
 
             SettingItem(
