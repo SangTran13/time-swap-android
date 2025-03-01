@@ -7,18 +7,23 @@ import org.json.JSONObject
 import android.content.Context
 import android.content.SharedPreferences
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 
+import timeswap.application.data.request.ChangePasswordRequest
 import timeswap.application.data.request.ForgotPasswordRequest
 import timeswap.application.data.request.LoginRequest
 import timeswap.application.data.request.RegisterRequest
 import timeswap.application.data.response.BaseResponse
 import timeswap.application.data.response.LoginResponse
-import timeswap.application.network.RetrofitClient
+import timeswap.application.network.RetrofitClient.authService
 import timeswap.application.shared.constants.HttpResponseCodeConstants
 import timeswap.application.shared.constants.StatusCodeConstants
 import timeswap.application.ui.utils.ApiUtils
@@ -33,6 +38,12 @@ interface AuthService {
 
     @POST("auth/forgot-password")
     fun forgotPassword(@Body request: ForgotPasswordRequest): Call<BaseResponse<Unit>>
+
+    @POST("auth/change-password")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Body request: ChangePasswordRequest
+    ): Response<BaseResponse<Any>>
 }
 
 class ForgotPasswordService {
@@ -42,7 +53,7 @@ class ForgotPasswordService {
     ) {
         val request = ForgotPasswordRequest(email)
 
-        RetrofitClient.authService.forgotPassword(request)
+        authService.forgotPassword(request)
             .enqueue(object : Callback<BaseResponse<Unit>> {
                 override fun onResponse(
                     call: Call<BaseResponse<Unit>>, response: Response<BaseResponse<Unit>>
@@ -66,7 +77,7 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
     fun login(email: String, password: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         val request = LoginRequest(email.trim(), password.trim())
 
-        RetrofitClient.authService.login(request)
+        authService.login(request)
             .enqueue(object : Callback<BaseResponse<LoginResponse>> {
                 override fun onResponse(
                     call: Call<BaseResponse<LoginResponse>>,
@@ -124,7 +135,7 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
             clientUrl = "https://tranduchuy.me:9001/api/auth/confirm-email"
         )
 
-        RetrofitClient.authService.register(request).enqueue(object : Callback<BaseResponse<Unit>> {
+        authService.register(request).enqueue(object : Callback<BaseResponse<Unit>> {
             override fun onResponse(
                 call: Call<BaseResponse<Unit>>, response: Response<BaseResponse<Unit>>
             ) {
@@ -149,6 +160,25 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
             }
         })
     }
+
+    suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit> {
+        val token = sharedPreferences.getString("accessToken", "") ?: ""
+        if (token.isBlank()) return Result.failure(Exception("User is not authenticated"))
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = authService.changePassword("Bearer $token", ChangePasswordRequest(currentPassword, newPassword))
+                if (response.isSuccessful && response.body()?.statusCode == 1005) {
+                    Result.success(Unit)
+                } else {
+                    Result.failure(Exception(response.body()?.message ?: "Password change failed"))
+                }
+            } catch (e: Exception) {
+                Result.failure(Exception("Network error: ${e.message}"))
+            }
+        }
+    }
+
 
     private fun saveTokens(accessToken: String, refreshToken: String, expiresIn: Int) {
         with(sharedPreferences.edit()) {

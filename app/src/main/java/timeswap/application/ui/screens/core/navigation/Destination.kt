@@ -39,3 +39,38 @@ object PaymentDestination : Destination {
     override val route = "payment"
     override val title = "Payment"
 }
+
+object SettingsDestination : Destination {
+    override val route = "settings"
+    override val title = "Settings"
+}
+
+object JobDestination : Destination {
+    override val route = "job"
+    override val title = "Job"
+}
+
+object ChangePasswordDestination : Destination {
+    override val route = "change-password"
+    override val title = "Change Password"
+}
+
+object ProfileDestination : Destination {
+    override val route = "profile"
+    override val title = "Profile"
+}
+
+object EditAboutMeDestination : Destination {
+    override val route = "edit_about_me_screen"
+    override val title = "Edit About Me"
+}
+
+object EditMajorDestination : Destination {
+    override val route = "edit_major_screen"
+    override val title = "Edit Major"
+}
+
+object EditEducationDestination : Destination {
+    override val route = "edit_education_screen"
+    override val title = "Edit Education"
+}
