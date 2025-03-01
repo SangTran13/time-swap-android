@@ -1,16 +1,7 @@
 package timeswap.application.ui.screens.core.navigation
 
-import timeswap.application.ui.shared.components.BottomNavigationBar
-import timeswap.application.ui.screens.features.setting.SettingsScreen
-
+import timeswap.application.ui.screens.features.profiles.update_profile.EducationScreen
 import android.content.Context
-
-import kotlinx.coroutines.delay
-
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -28,7 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.delay
 import timeswap.application.network.services.PaymentRepository
 import timeswap.application.network.services.UserRepository
 import timeswap.application.ui.screens.core.authentication.change_password.ChangePasswordScreen
@@ -40,7 +35,11 @@ import timeswap.application.ui.screens.features.jobs.JobScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
 import timeswap.application.ui.screens.features.payment.PaymentScreen
 import timeswap.application.ui.screens.features.profiles.ProfileScreen
+import timeswap.application.ui.screens.features.profiles.update_profile.AboutMeScreen
+import timeswap.application.ui.screens.features.profiles.update_profile.MajorScreen
+import timeswap.application.ui.screens.features.setting.SettingsScreen
 import timeswap.application.ui.screens.features.splash.SplashScreen
+import timeswap.application.ui.shared.components.BottomNavigationBar
 import timeswap.application.viewmodel.JobListViewModel
 
 @Composable
@@ -138,6 +137,16 @@ fun NavRegister(context: Context) {
                 }
                 composable(ProfileDestination.route) {
                     ProfileScreen(navController = navController)
+                }
+
+                composable(EditAboutMeDestination.route) {
+                    AboutMeScreen(navController = navController, locationViewModel = viewModel())
+                }
+                composable(EditMajorDestination.route) {
+                    MajorScreen(navController = navController,  industryCategoryViewModel = viewModel())
+                }
+                composable(EditEducationDestination.route) {
+                    EducationScreen(navController = navController)
                 }
             }
         }
