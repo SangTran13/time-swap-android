@@ -17,6 +17,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_AUTH_URL", "\"${project.properties["BASE_AUTH_URL"]}\"")
+        buildConfigField("String", "BASE_API_URL", "\"${project.properties["BASE_API_URL"]}\"")
+
     }
 
     buildTypes {
@@ -36,12 +40,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
 
-
+    implementation (libs.reorderable)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.coil.compose)
     implementation(libs.retrofit)

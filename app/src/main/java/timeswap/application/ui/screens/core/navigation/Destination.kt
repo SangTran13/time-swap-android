@@ -59,3 +59,18 @@ object ProfileDestination : Destination {
     override val route = "profile"
     override val title = "Profile"
 }
+
+object EditAboutMeDestination : Destination {
+    override val route = "edit_about_me_screen"
+    override val title = "Edit About Me"
+}
+
+object EditMajorDestination : Destination {
+    override val route = "edit_major_screen"
+    override val title = "Edit Major"
+}
+
+object EditEducationDestination : Destination {
+    override val route = "edit_education_screen"
+    override val title = "Edit Education"
+}
