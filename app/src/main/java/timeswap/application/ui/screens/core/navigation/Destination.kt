@@ -49,3 +49,13 @@ object JobDestination : Destination {
     override val route = "job"
     override val title = "Job"
 }
+
+object ChangePasswordDestination : Destination {
+    override val route = "change-password"
+    override val title = "Change Password"
+}
+
+object ProfileDestination : Destination {
+    override val route = "profile"
+    override val title = "Profile"
+}

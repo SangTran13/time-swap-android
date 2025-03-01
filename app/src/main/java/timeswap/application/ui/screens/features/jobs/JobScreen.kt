@@ -8,6 +8,7 @@ import timeswap.application.R
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -51,9 +54,18 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+import coil.compose.AsyncImage
+
+import timeswap.application.data.entity.JobList
+import timeswap.application.viewmodel.JobListUiState
+import timeswap.application.viewmodel.JobListViewModel
+import timeswap.application.shared.utils.CommonFunction
 
 @Composable
-fun JobScreen(navController: NavController) {
+fun JobScreen(navController: NavController, viewModel: JobListViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    var isSwiping by remember { mutableStateOf(false) }
+
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) }
     ) { innerPadding ->
@@ -90,7 +102,9 @@ fun JobScreen(navController: NavController) {
 
             // Filter Section
             Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Box(
@@ -107,16 +121,76 @@ fun JobScreen(navController: NavController) {
                         tint = Color.White
                     )
                 }
-                FilterChip("Senior designer", true)
-                FilterChip("Designer")
-                FilterChip("Full-time")
+                FilterChip("Tất Cả Danh Mục", true)
+                FilterChip("Công Nghệ", false)
+                FilterChip("Dịch Vụ", false)
             }
 
-            // Job List
-            LazyColumn(contentPadding = PaddingValues(22.dp)) {
-                items(jobList) { job ->
-                    JobCard(job)
-                    Spacer(modifier = Modifier.height(25.dp))
+            // Job List Section with Swipe Gesture
+            when (uiState) {
+                is JobListUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("Loading...", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
+
+                is JobListUiState.Error -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            (uiState as JobListUiState.Error).message,
+                            color = Color.Red,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+
+                is JobListUiState.Success -> {
+                    val successState = uiState as JobListUiState.Success
+                    val jobList = successState.jobList
+                    val currentPage = successState.pageIndex
+                    val totalPages = successState.totalPages
+
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            contentPadding = PaddingValues(22.dp),
+                            modifier = Modifier.pointerInput(Unit) {
+                                detectHorizontalDragGestures { _, dragAmount ->
+                                    if (dragAmount < -100 && currentPage < totalPages) {
+                                        isSwiping = true
+                                        viewModel.nextPage()
+                                        isSwiping = false
+                                    } else if (dragAmount > 100 && currentPage > 1) {
+                                        isSwiping = true
+                                        viewModel.previousPage()
+                                        isSwiping = false
+                                    }
+                                }
+                            }
+                        ) {
+                            items(jobList) { job ->
+                                JobCard(job)
+                                Spacer(modifier = Modifier.height(25.dp))
+                            }
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Page $currentPage / $totalPages",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Gray
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -177,11 +251,11 @@ fun LocationSearchBar() {
 }
 
 @Composable
-fun FilterChip(text: String, selected: Boolean = false) {
+fun FilterChip(text: String, selected: Boolean, color: Color = Color.LightGray) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
-            .background(if (selected) Color(0xFFFFA726) else Color.LightGray)
+            .background(if (selected) Color(0xFFFFA726) else color)
             .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         Text(text, color = Color.White, fontSize = 14.sp)
@@ -189,52 +263,43 @@ fun FilterChip(text: String, selected: Boolean = false) {
 }
 
 @Composable
-fun JobCard(job: Job) {
+fun JobCard(job: JobList) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().height(140.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = job.logo),
+                AsyncImage(
+                    model = job.ownerAvatarUrl,
                     contentDescription = null,
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
                     Text(text = job.title, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                    Text(text = job.company, fontSize = 14.sp, color = Color.Gray)
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(job.category)
-                FilterChip(job.type)
-                FilterChip(job.level)
+                FilterChip(job.category.categoryName, false, color = Color(0xFF2196F3))
+                FilterChip(job.ward.name, false, color = Color(0xFF4CAF50))
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("25 minutes ago", fontSize = 12.sp, color = Color.Gray)
-                Text("${job.salary}/Mo", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+                Text(CommonFunction.formatDateFromUTC(job.createdAt), fontSize = 12.sp, color = Color.Gray)
+                Text("${job.fee}VNĐ", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
             }
         }
     }
 }
 
-// Job Data Class
-data class Job(val title: String, val company: String, val category: String, val type: String, val level: String, val salary: String, val logo: Int)
-
-// Sample Data
-val jobList = listOf(
-    Job("UI/UX Designer", "Google Inc", "Design", "Full-time", "Senior designer", "$15K", R.drawable.logo_1),
-    Job("Lead Designer", "Dribble Inc", "Design", "Full-time", "Senior designer", "$20K", R.drawable.logo_1),
-    Job("Lead UI/UX", "Apple Inc", "Design", "Full-time", "Senior designer", "$20K", R.drawable.logo_1)
-
-)
 
 @Preview
 @Composable
 fun PreviewJobScreen() {
-    JobScreen(navController = NavController(LocalContext.current))
+    JobScreen(navController = NavController(LocalContext.current), viewModel = JobListViewModel())
 }
