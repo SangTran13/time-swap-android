@@ -109,7 +109,7 @@ fun NavRegister(context: Context) {
                     )
                 }
                 composable(HomeDestination.route) {
-                    HomeScreen(context = context, navController = navController)
+                    HomeScreen(navController = navController)
                 }
                 composable(PaymentDestination.route) {
                     PaymentScreen(
