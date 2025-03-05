@@ -77,7 +77,7 @@ fun JobScreen(navController: NavController, viewModel: JobListViewModel, industr
 
                 is JobListUiState.Success -> {
                     val successState = uiState as JobListUiState.Success
-                    JobListSection(successState, viewModel)
+                    JobListSection(successState, navController, viewModel)
                 }
             }
         }

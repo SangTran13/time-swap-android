@@ -1,21 +1,20 @@
 package timeswap.application.ui.shared.components
 
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,11 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import timeswap.application.R
 import timeswap.application.ui.screens.core.navigation.ChatDestination
 import timeswap.application.ui.screens.core.navigation.HomeDestination
@@ -41,7 +39,9 @@ fun BottomNavigationBar(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     BottomAppBar(
-        modifier = Modifier.fillMaxWidth().height(120.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp),
         containerColor = Color.White,
         contentColor = Color.Black
     ) {
@@ -70,14 +70,16 @@ fun BottomNavigationBar(navController: NavController) {
                 onClick = { },
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                modifier = Modifier.size(54.dp).offset(y = (-12).dp)
+                modifier = Modifier
+                    .size(54.dp)
+                    .offset(y = (-12).dp),
+                contentPadding = PaddingValues(0.dp)
             ) {
-                Text(
-                    text = "+",
-                    fontSize = 15.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add",
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
                 )
             }
 
