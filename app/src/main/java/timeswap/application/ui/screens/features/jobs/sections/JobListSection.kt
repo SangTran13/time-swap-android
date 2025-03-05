@@ -1,5 +1,6 @@
 package timeswap.application.ui.screens.features.jobs.sections
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 
 import timeswap.application.shared.utils.CommonFunction
@@ -42,7 +44,7 @@ import timeswap.application.viewmodel.JobListUiState
 import timeswap.application.viewmodel.JobListViewModel
 
 @Composable
-fun JobListSection(requiredData: JobListUiState.Success, viewModel: JobListViewModel) {
+fun JobListSection(requiredData: JobListUiState.Success, navController: NavController, viewModel: JobListViewModel) {
     var isSwiping by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -76,34 +78,40 @@ fun JobListSection(requiredData: JobListUiState.Success, viewModel: JobListViewM
                 }
             ) {
                 items(requiredData.jobList) { job ->
-                    JobCard(job)
+                    JobCard(
+                        job,
+                        onClick = {
+                            navController.navigate("jobDetail/${job.id}")
+                        }
+                    )
                     Spacer(modifier = Modifier.height(25.dp))
                 }
             }
-        }
 
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = if (requiredData.jobList.isEmpty()) "Page 0 / 0"
-                else "Page ${requiredData.pageIndex} / ${requiredData.totalPages}",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Gray
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = if (requiredData.jobList.isEmpty()) "Page 0 / 0"
+                    else "Page ${requiredData.pageIndex} / ${requiredData.totalPages}",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
+                )
+            }
         }
     }
 }
 
 
 @Composable
-fun JobCard(job: JobList) {
+fun JobCard(job: JobList, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(140.dp),
+            .height(140.dp)
+            .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -143,12 +151,12 @@ fun JobCard(job: JobList) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    CommonFunction.formatDateFromUTC(job.createdAt),
+                    CommonFunction.formatDateFromUTC(job.createdAt, 2),
                     fontSize = 12.sp,
                     color = Color.Gray
                 )
                 Text(
-                    "${job.fee}VNĐ",
+                    text = CommonFunction.formatCurrency(job.fee),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black

@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -74,15 +75,25 @@ fun SearchBar(viewModel: JobListViewModel) {
             modifier = Modifier.size(20.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        BasicTextField(
-            value = textState,
-            onValueChange = {
-                textState = it
-                viewModel.searchJobs(it.text)
-            },
-            textStyle = LocalTextStyle.current.copy(fontSize = 16.sp),
-            modifier = Modifier.fillMaxWidth()
-        )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            if (textState.text.isEmpty()) {
+                Text(
+                    text = "Search...",
+                    color = Color.Gray,
+                    fontSize = 16.sp
+                )
+            }
+
+            BasicTextField(
+                value = textState,
+                onValueChange = {
+                    textState = it
+                    viewModel.searchJobs(it.text)
+                },
+                textStyle = LocalTextStyle.current.copy(fontSize = 16.sp),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 
@@ -105,11 +116,22 @@ fun LocationSearchBar() {
             tint = Color(0xFFFFA726)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        BasicTextField(
-            value = locationState,
-            onValueChange = { locationState = it },
-            textStyle = LocalTextStyle.current.copy(fontSize = 16.sp),
-            modifier = Modifier.fillMaxWidth()
-        )
+
+        Box(modifier = Modifier.fillMaxWidth()) {
+            if (locationState.text.isEmpty()) {
+                Text(
+                    text = "Xuân Thủy, Cầu Giấy, Hà Nội",
+                    color = Color.Gray,
+                    fontSize = 16.sp
+                )
+            }
+
+            BasicTextField(
+                value = locationState,
+                onValueChange = { locationState = it },
+                textStyle = LocalTextStyle.current.copy(fontSize = 16.sp),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }

@@ -155,7 +155,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
 
             ProfileTextField("Subscription Expired Date", userProfile?.subscriptionExpiryDate?.let {
                 CommonFunction.formatDateFromUTC(
-                    it
+                    it, 2
                 )
             }
                 ?: "N/A", false)
