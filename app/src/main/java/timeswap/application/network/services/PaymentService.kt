@@ -47,32 +47,35 @@ class PaymentRepository(private val context: Context) {
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
-        withContext(Dispatchers.IO) {
-            try {
-                if (token.isNullOrEmpty()) {
-                    onError("Authentication token is missing")
-                    return@withContext
-                }
+        if (token.isNullOrEmpty()) {
+            onError("Authentication token is missing")
+            return
+        }
 
+        try {
+            withContext(Dispatchers.IO) {
                 val request = PaymentRequest(note, amount, paymentMethod)
-                val response: Response<BaseResponse<String>> =
-                    RetrofitClient.paymentService.createPayment("Bearer $token", request)
+                val response = RetrofitClient.paymentService.createPayment("Bearer $token", request)
 
                 if (response.isSuccessful) {
-                    response.body()?.let { baseResponse ->
+                    val baseResponse = response.body()
+                    if (baseResponse != null) {
                         if (baseResponse.statusCode == StatusCodeConstants.SUCCESS_CODE && baseResponse.data != null) {
                             openPaymentLink(baseResponse.data)
                             onSuccess()
                         } else {
-                            onError(baseResponse.message)
+                            onError(baseResponse.message ?: "Payment failed for unknown reason")
                         }
-                    } ?: onError("Unexpected response format")
+                    } else {
+                        onError("Unexpected response format")
+                    }
                 } else {
-                    onError("Payment failed: ${response.errorBody()?.string()}")
+                    val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                    onError("Payment failed: $errorBody")
                 }
-            } catch (e: Exception) {
-                onError("Error: ${e.message}")
             }
+        } catch (e: Exception) {
+            onError("Error: ${e.message}")
         }
     }
 

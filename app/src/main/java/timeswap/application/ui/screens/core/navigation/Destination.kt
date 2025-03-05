@@ -74,3 +74,8 @@ object EditEducationDestination : Destination {
     override val route = "edit_education_screen"
     override val title = "Edit Education"
 }
+
+object ChatDestination : Destination {
+    override val route = "chat"
+    override val title = "Chat"
+}

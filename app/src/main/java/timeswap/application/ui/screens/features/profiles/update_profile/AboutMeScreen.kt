@@ -83,16 +83,24 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
         if (accessToken.isNotEmpty()) {
             profileViewModel.loadUserProfile(accessToken)
         }
-        locationViewModel.loadCities()
+        if (selectedCity.isEmpty()) {
+            locationViewModel.loadCities()
+        }
+    }
+
+    LaunchedEffect(selectedWard) {
+        if (selectedWard.isEmpty() && selectedCity.isNotEmpty()) {
+            locationViewModel.loadWards(getCityId(selectedCity, cities))
+        }
     }
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            firstName = it.firstName
-            lastName = it.lastName
-            phone = it.phoneNumber
-            description = it.description
-            selectedWard = it.fullLocation
+            firstName = it.firstName ?: ""
+            lastName = it.lastName ?: ""
+            phone = it.phoneNumber ?: ""
+            description = it.description ?: ""
+            selectedWard = it.fullLocation ?: ""
             selectedCity = extractCity(it.fullLocation)
         }
     }
@@ -128,7 +136,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
             if (isEditing) {
                 DropdownField(
                     label = "City",
-                    options = cities.map { it.name },
+                    options = cities.map { it.name }.ifEmpty { listOf("Loading...") },
                     selectedOption = selectedCity
                 ) { city ->
                     selectedCity = city
@@ -138,7 +146,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
 
                 DropdownField(
                     label = "Ward",
-                    options = if (wards.isNotEmpty()) wards.map { it.name } else emptyList(),
+                    options = if (wards.isNotEmpty()) wards.map { it.name } else listOf("Loading..."),
                     selectedOption = selectedWard
                 ) { selectedWard = it }
             } else {
@@ -147,7 +155,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
 
             ProfileTextField("Subscription Expired Date", userProfile?.subscriptionExpiryDate?.let {
                 CommonFunction.formatDateFromUTC(
-                    it
+                    it, 2
                 )
             }
                 ?: "N/A", false)

@@ -20,9 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import kotlinx.coroutines.delay
 import timeswap.application.network.services.PaymentRepository
 import timeswap.application.network.services.UserRepository
@@ -30,7 +32,9 @@ import timeswap.application.ui.screens.core.authentication.change_password.Chang
 import timeswap.application.ui.screens.core.authentication.forgot_password.ForgotPasswordScreen
 import timeswap.application.ui.screens.core.authentication.login.LoginScreen
 import timeswap.application.ui.screens.core.authentication.register.RegisterScreen
+import timeswap.application.ui.screens.features.chat.ChatScreen
 import timeswap.application.ui.screens.features.home.HomeScreen
+import timeswap.application.ui.screens.features.jobdetail.JobDetailScreen
 import timeswap.application.ui.screens.features.jobs.JobScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
 import timeswap.application.ui.screens.features.payment.PaymentScreen
@@ -109,7 +113,7 @@ fun NavRegister(context: Context) {
                     )
                 }
                 composable(HomeDestination.route) {
-                    HomeScreen(context = context, navController = navController)
+                    HomeScreen(navController = navController)
                 }
                 composable(PaymentDestination.route) {
                     PaymentScreen(
@@ -127,7 +131,7 @@ fun NavRegister(context: Context) {
                     SettingsScreen(context = context, navController = navController)
                 }
                 composable(JobDestination.route) {
-                    JobScreen(navController = navController, viewModel = JobListViewModel())
+                    JobScreen(navController = navController, viewModel = JobListViewModel(), industryCategoryViewModel = viewModel())
                 }
                 composable(ChangePasswordDestination.route) {
                     ChangePasswordScreen(
@@ -147,6 +151,17 @@ fun NavRegister(context: Context) {
                 }
                 composable(EditEducationDestination.route) {
                     EducationScreen(navController = navController)
+                }
+                composable(ChatDestination.route) {
+                    ChatScreen(navController = navController, viewModel = viewModel())
+                }
+
+                composable(
+                    route = "jobDetail/{jobId}",
+                    arguments = listOf(navArgument("jobId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val jobId = backStackEntry.arguments?.getString("jobId")
+                    JobDetailScreen(navController = navController, jobId = jobId)
                 }
             }
         }

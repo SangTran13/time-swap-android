@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">timeswap</string>
+    <string name="job_details_text_screen_title">Job Detail</string>
 </resources>
