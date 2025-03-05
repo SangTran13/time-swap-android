@@ -31,9 +31,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import timeswap.application.R
+import timeswap.application.viewmodel.JobListViewModel
 
 @Composable
-fun HeaderSearchSection() {
+fun HeaderSearchSection(viewModel: JobListViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,16 +48,18 @@ fun HeaderSearchSection() {
             contentScale = ContentScale.Crop
         )
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            SearchBar()
+            SearchBar(viewModel)
             Spacer(modifier = Modifier.height(15.dp))
             LocationSearchBar()
         }
     }
 }
 
+
 @Composable
-fun SearchBar() {
+fun SearchBar(viewModel: JobListViewModel) {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth(0.9f)
@@ -73,12 +76,16 @@ fun SearchBar() {
         Spacer(modifier = Modifier.width(8.dp))
         BasicTextField(
             value = textState,
-            onValueChange = { textState = it },
+            onValueChange = {
+                textState = it
+                viewModel.searchJobs(it.text)
+            },
             textStyle = LocalTextStyle.current.copy(fontSize = 16.sp),
             modifier = Modifier.fillMaxWidth()
         )
     }
 }
+
 
 @Composable
 fun LocationSearchBar() {
