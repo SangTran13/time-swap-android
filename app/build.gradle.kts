@@ -20,6 +20,9 @@ android {
 
         buildConfigField("String", "BASE_AUTH_URL", "\"${project.properties["BASE_AUTH_URL"]}\"")
         buildConfigField("String", "BASE_API_URL", "\"${project.properties["BASE_API_URL"]}\"")
+        buildConfigField("String", "BASE_GPT_URL", "\"${project.properties["BASE_GPT_URL"]}\"")
+        buildConfigField("String", "KEY_GPT_API", "\"${project.properties["KEY_GPT_API"]}\"")
+        buildConfigField("String", "KEY_ORGANIZATION_GPT_API", "\"${project.properties["KEY_ORGANIZATION_GPT_API"]}\"")
 
     }
 
@@ -46,6 +49,8 @@ android {
 
 dependencies {
 
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
     implementation (libs.reorderable)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.coil.compose)
