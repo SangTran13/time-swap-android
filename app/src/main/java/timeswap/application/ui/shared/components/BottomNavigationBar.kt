@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import timeswap.application.R
+import timeswap.application.ui.screens.core.navigation.ChatDestination
 import timeswap.application.ui.screens.core.navigation.HomeDestination
 import timeswap.application.ui.screens.core.navigation.JobDestination
 import timeswap.application.ui.screens.core.navigation.SettingsDestination
@@ -82,10 +83,10 @@ fun BottomNavigationBar(navController: NavController) {
 
             BottomNavItem(
                 navController = navController,
-                route = HomeDestination.route,
+                route = ChatDestination.route,
                 iconRes = R.drawable.chat,
-                contentDescription = "Notifications",
-                isSelected = currentRoute == "notifications"
+                contentDescription = "Chat",
+                isSelected = currentRoute == "chat"
             )
 
             BottomNavItem(

@@ -30,6 +30,7 @@ import timeswap.application.ui.screens.core.authentication.change_password.Chang
 import timeswap.application.ui.screens.core.authentication.forgot_password.ForgotPasswordScreen
 import timeswap.application.ui.screens.core.authentication.login.LoginScreen
 import timeswap.application.ui.screens.core.authentication.register.RegisterScreen
+import timeswap.application.ui.screens.features.chat.ChatScreen
 import timeswap.application.ui.screens.features.home.HomeScreen
 import timeswap.application.ui.screens.features.jobs.JobScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
@@ -147,6 +148,9 @@ fun NavRegister(context: Context) {
                 }
                 composable(EditEducationDestination.route) {
                     EducationScreen(navController = navController)
+                }
+                composable(ChatDestination.route) {
+                    ChatScreen(navController = navController, viewModel = viewModel())
                 }
             }
         }
