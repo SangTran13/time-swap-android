@@ -127,7 +127,7 @@ fun NavRegister(context: Context) {
                     SettingsScreen(context = context, navController = navController)
                 }
                 composable(JobDestination.route) {
-                    JobScreen(navController = navController, viewModel = JobListViewModel())
+                    JobScreen(navController = navController, viewModel = JobListViewModel(), industryCategoryViewModel = viewModel())
                 }
                 composable(ChangePasswordDestination.route) {
                     ChangePasswordScreen(

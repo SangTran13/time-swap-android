@@ -28,6 +28,9 @@ class JobListViewModel : ViewModel() {
     private val pageSize = AppConstants.PAGE_SIZE
     private var totalPages = 1
 
+    private var currentSearchQuery: String? = null
+    private var currentIndustryId: Int? = null
+
     init {
         fetchJobLists()
     }
@@ -36,7 +39,7 @@ class JobListViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.value = JobListUiState.Loading
             try {
-                val response = jobListRepository.getJobLists(pageIndex, pageSize)
+                val response = jobListRepository.getJobLists(currentIndustryId, currentSearchQuery, pageIndex, pageSize)
                 if (response != null) {
                     totalPages = (response.count + pageSize - 1) / pageSize
                     _uiState.value = JobListUiState.Success(response.data, pageIndex, totalPages)
@@ -47,6 +50,18 @@ class JobListViewModel : ViewModel() {
                 _uiState.value = JobListUiState.Error("Error: ${e.message}")
             }
         }
+    }
+
+    fun searchJobs(query: String) {
+        currentSearchQuery = query
+        pageIndex = 1
+        fetchJobLists()
+    }
+
+    fun filterByIndustry(industryId: Int?) {
+        currentIndustryId = industryId
+        pageIndex = 1
+        fetchJobLists()
     }
 
     fun nextPage() {
@@ -63,3 +78,4 @@ class JobListViewModel : ViewModel() {
         }
     }
 }
+

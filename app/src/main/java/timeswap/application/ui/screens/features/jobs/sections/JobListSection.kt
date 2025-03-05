@@ -44,35 +44,51 @@ import timeswap.application.viewmodel.JobListViewModel
 @Composable
 fun JobListSection(requiredData: JobListUiState.Success, viewModel: JobListViewModel) {
     var isSwiping by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            contentPadding = PaddingValues(22.dp),
-            modifier = Modifier.pointerInput(Unit) {
-                detectHorizontalDragGestures { _, dragAmount ->
-                    if (dragAmount < -100 && requiredData.pageIndex < requiredData.totalPages) {
-                        isSwiping = true
-                        viewModel.nextPage()
-                        isSwiping = false
-                    } else if (dragAmount > 100 && requiredData.pageIndex > 1) {
-                        isSwiping = true
-                        viewModel.previousPage()
-                        isSwiping = false
+        if (requiredData.jobList.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No job lists found",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
+                )
+            }
+        } else {
+            LazyColumn(
+                contentPadding = PaddingValues(22.dp),
+                modifier = Modifier.pointerInput(Unit) {
+                    detectHorizontalDragGestures { _, dragAmount ->
+                        if (dragAmount < -100 && requiredData.pageIndex < requiredData.totalPages) {
+                            isSwiping = true
+                            viewModel.nextPage()
+                            isSwiping = false
+                        } else if (dragAmount > 100 && requiredData.pageIndex > 1) {
+                            isSwiping = true
+                            viewModel.previousPage()
+                            isSwiping = false
+                        }
                     }
                 }
-            }
-        ) {
-            items(requiredData.jobList) { job ->
-                JobCard(job)
-                Spacer(modifier = Modifier.height(25.dp))
+            ) {
+                items(requiredData.jobList) { job ->
+                    JobCard(job)
+                    Spacer(modifier = Modifier.height(25.dp))
+                }
             }
         }
+
         Box(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Page ${requiredData.pageIndex} / ${requiredData.totalPages}",
+                text = if (requiredData.jobList.isEmpty()) "Page 0 / 0"
+                else "Page ${requiredData.pageIndex} / ${requiredData.totalPages}",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray
@@ -80,6 +96,7 @@ fun JobListSection(requiredData: JobListUiState.Success, viewModel: JobListViewM
         }
     }
 }
+
 
 @Composable
 fun JobCard(job: JobList) {
@@ -106,8 +123,19 @@ fun JobCard(job: JobList) {
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(job.category.categoryName, false, color = Color(0xFF2196F3))
-                FilterChip(job.ward.name, false, color = Color(0xFF4CAF50))
+                FilterChip(
+                    text = job.category.categoryName,
+                    selected = false,
+                    onClick = { /* TODO: Thêm logic nếu cần */ },
+                    color = Color(0xFF2196F3)
+                )
+
+                FilterChip(
+                    text = job.ward.name,
+                    selected = false,
+                    onClick = { /* TODO: Thêm logic nếu cần */ },
+                    color = Color(0xFF4CAF50)
+                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(

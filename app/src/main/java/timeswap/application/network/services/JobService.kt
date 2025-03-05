@@ -14,19 +14,21 @@ import timeswap.application.network.RetrofitClient
 import timeswap.application.shared.constants.AppConstants
 
 interface JobService {
-
     @GET("jobposts")
     suspend fun getJobLists(
+        @Query("IndustryId") industryId: Int? = null,
+        @Query("Search") search: String? = null,
         @Query("PageIndex") pageIndex: Int = AppConstants.PAGE_INDEX,
         @Query("PageSize") pageSize: Int = AppConstants.PAGE_SIZE
     ): Response<BaseResponse<JobListResponse>>
 }
 
+
 class JobListRepository {
-    suspend fun getJobLists(pageIndex: Int, pageSize: Int): JobListResponse? {
+    suspend fun getJobLists(industryId: Int?, search: String?, pageIndex: Int, pageSize: Int): JobListResponse? {
         return withContext(Dispatchers.IO) {
             try {
-                val response = RetrofitClient.jobService.getJobLists(pageIndex, pageSize)
+                val response = RetrofitClient.jobService.getJobLists(industryId, search, pageIndex, pageSize)
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body?.statusCode == 1000) {
@@ -45,3 +47,5 @@ class JobListRepository {
         }
     }
 }
+
+
