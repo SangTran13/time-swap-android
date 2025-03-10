@@ -64,7 +64,7 @@ class PaymentRepository(private val context: Context) {
                             openPaymentLink(baseResponse.data)
                             onSuccess()
                         } else {
-                            onError(baseResponse.message ?: "Payment failed for unknown reason")
+                            onError(baseResponse.message)
                         }
                     } else {
                         onError("Unexpected response format")

@@ -1,5 +1,7 @@
 package timeswap.application.data.request
 
+import timeswap.application.BuildConfig
+
 data class RegisterRequest(
     val firstName: String,
     val lastName: String,
@@ -7,5 +9,5 @@ data class RegisterRequest(
     val phoneNumber: String,
     val password: String,
     val confirmPassword: String,
-    val clientUrl: String = "https://tranduchuy.me:9001/api/auth/confirm-email"
+    val clientUrl: String = BuildConfig.CONFIRM_EMAIL_AUTH_URL
 )

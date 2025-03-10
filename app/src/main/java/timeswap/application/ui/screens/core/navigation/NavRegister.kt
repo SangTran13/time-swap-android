@@ -35,6 +35,7 @@ import timeswap.application.ui.screens.core.authentication.register.RegisterScre
 import timeswap.application.ui.screens.features.chat.ChatScreen
 import timeswap.application.ui.screens.features.home.HomeScreen
 import timeswap.application.ui.screens.features.jobdetail.JobDetailScreen
+import timeswap.application.ui.screens.features.jobpost.JobPostScreen
 import timeswap.application.ui.screens.features.jobs.JobScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
 import timeswap.application.ui.screens.features.payment.PaymentScreen
@@ -162,6 +163,10 @@ fun NavRegister(context: Context) {
                 ) { backStackEntry ->
                     val jobId = backStackEntry.arguments?.getString("jobId")
                     JobDetailScreen(navController = navController, jobId = jobId)
+                }
+
+                composable(JobPostDestination.route) {
+                    JobPostScreen(navController = navController, industryCategoryViewModel = viewModel(), locationViewModel = viewModel())
                 }
             }
         }

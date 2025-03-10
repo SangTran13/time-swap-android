@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timeswap.application.data.response.JobDetailResponse
 import timeswap.application.network.services.JobPostService
-import java.util.UUID
 
 class JobDetailViewModel(private val repository: JobPostService) : ViewModel() {
 

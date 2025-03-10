@@ -1,6 +1,6 @@
 package timeswap.application.data.entity
 
-data class JobList(
+data class JobPost(
     val id: String,
     val userId: String,
     val ownerAvatarUrl: String,

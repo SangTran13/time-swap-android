@@ -39,7 +39,7 @@ import coil.compose.AsyncImage
 
 import timeswap.application.shared.utils.CommonFunction
 
-import timeswap.application.data.entity.JobList
+import timeswap.application.data.entity.JobPost
 import timeswap.application.viewmodel.JobListUiState
 import timeswap.application.viewmodel.JobListViewModel
 
@@ -106,7 +106,7 @@ fun JobListSection(requiredData: JobListUiState.Success, navController: NavContr
 
 
 @Composable
-fun JobCard(job: JobList, onClick: () -> Unit) {
+fun JobCard(job: JobPost, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
