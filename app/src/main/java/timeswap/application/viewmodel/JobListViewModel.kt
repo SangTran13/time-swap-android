@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-import timeswap.application.data.entity.JobList
+import timeswap.application.data.entity.JobPost
 import timeswap.application.network.services.JobPostService
 import timeswap.application.shared.constants.AppConstants
 
 sealed class JobListUiState {
     data object Loading : JobListUiState()
-    data class Success(val jobList: List<JobList>, val pageIndex: Int, val totalPages: Int) : JobListUiState()
+    data class Success(val jobList: List<JobPost>, val pageIndex: Int, val totalPages: Int) : JobListUiState()
     data class Error(val message: String) : JobListUiState()
 }
 

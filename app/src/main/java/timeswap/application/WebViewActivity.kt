@@ -1,29 +1,20 @@
 package timeswap.application
 
 import android.annotation.SuppressLint
-
 import android.content.Intent
-
 import android.net.Uri
-
 import android.os.Bundle
-
 import android.util.Log
-
-import android.widget.Toast
-
-import androidx.activity.ComponentActivity
-
-import timeswap.application.network.services.PaymentRepository
-
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-
+import android.widget.Toast
+import androidx.activity.ComponentActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timeswap.application.network.services.PaymentRepository
 
 
 class WebViewActivity : ComponentActivity() {

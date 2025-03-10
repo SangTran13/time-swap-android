@@ -96,11 +96,11 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            firstName = it.firstName ?: ""
-            lastName = it.lastName ?: ""
-            phone = it.phoneNumber ?: ""
-            description = it.description ?: ""
-            selectedWard = it.fullLocation ?: ""
+            firstName = it.firstName
+            lastName = it.lastName
+            phone = it.phoneNumber
+            description = it.description
+            selectedWard = it.fullLocation
             selectedCity = extractCity(it.fullLocation)
         }
     }
