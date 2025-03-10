@@ -1,11 +1,11 @@
 package timeswap.application.data.response
 
-import timeswap.application.data.entity.JobList
+import timeswap.application.data.entity.JobPost
 
 
-data class JobListResponse(
+data class JobPostResponse(
     val pageIndex: Int,
     val pageSize: Int,
     val count: Int,
-    val data: List<JobList>
+    val data: List<JobPost>
 )

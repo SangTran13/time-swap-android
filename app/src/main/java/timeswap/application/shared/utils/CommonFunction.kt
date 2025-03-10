@@ -10,7 +10,6 @@ object CommonFunction {
     fun formatDateFromUTC(utcDate: String, formatType: Int): String {
         return try {
 
-            // 1. Validate Date without millisecond
             val patternUtc: String
             val patternFormatTime: String
 

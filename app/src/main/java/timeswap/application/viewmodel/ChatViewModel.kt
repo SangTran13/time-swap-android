@@ -20,7 +20,10 @@ class ChatViewModel : ViewModel() {
 
         viewModelScope.launch {
             val botResponse = repository.sendMessage(updatedMessages)
-            _chatMessages.value = _chatMessages.value + ChatMessage(role = "assistant", content = botResponse ?: "Không nhận được phản hồi.")
+            _chatMessages.value += ChatMessage(
+                role = "assistant",
+                content = botResponse ?: "Không nhận được phản hồi."
+            )
         }
     }
 }

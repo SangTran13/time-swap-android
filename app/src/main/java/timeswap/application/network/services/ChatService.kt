@@ -1,7 +1,6 @@
 package timeswap.application.network.services
 
 import retrofit2.http.Body
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import timeswap.application.data.entity.ChatMessage
 import timeswap.application.data.request.ChatRequest

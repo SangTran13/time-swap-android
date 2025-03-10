@@ -16,6 +16,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
+import timeswap.application.BuildConfig
 
 import timeswap.application.data.request.ChangePasswordRequest
 import timeswap.application.data.request.ForgotPasswordRequest
@@ -132,7 +133,7 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
             phoneNumber.trim(),
             password.trim(),
             confirmPassword.trim(),
-            clientUrl = "https://tranduchuy.me:9001/api/auth/confirm-email"
+            clientUrl = BuildConfig.CONFIRM_EMAIL_AUTH_URL
         )
 
         authService.register(request).enqueue(object : Callback<BaseResponse<Unit>> {

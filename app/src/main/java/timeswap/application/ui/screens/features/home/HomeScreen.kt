@@ -30,7 +30,7 @@ import timeswap.application.viewmodel.ProfileViewModel
 import timeswap.application.ui.screens.features.home.sections.UserInfoSection
 import timeswap.application.ui.screens.features.home.sections.BannerSection
 import timeswap.application.ui.screens.features.home.sections.JobCategorySection
-import timeswap.application.ui.screens.features.home.sections.RecentJobList
+import timeswap.application.ui.screens.features.home.sections.LocationMap
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -67,7 +67,7 @@ fun HomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             JobCategorySection()
             Spacer(modifier = Modifier.height(16.dp))
-            RecentJobList()
+            LocationMap(context)
             Spacer(modifier = Modifier.weight(1f))
         }
     }
