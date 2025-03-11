@@ -51,7 +51,6 @@ fun LocationMap(context: Context) {
                 .clickable { isMapExpanded = true },
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.elevatedCardElevation(6.dp)
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 currentLocation?.let { location ->

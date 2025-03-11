@@ -1,13 +1,11 @@
-package timeswap.application.ui.screens.features.jobpost
+package timeswap.application.ui.screens.features.job_post
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -68,7 +66,8 @@ fun JobPostScreen(
 ) {
     val jobService = remember { JobPostService() }
     val context = LocalContext.current
-    val sharedPreferences = remember { context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE) }
+    val sharedPreferences =
+        remember { context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE) }
     val accessToken = sharedPreferences.getString("accessToken", "") ?: ""
     val coroutineScope = rememberCoroutineScope()
 
@@ -104,7 +103,7 @@ fun JobPostScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(top = 50.dp, start = 20.dp, end = 20.dp)
+            .padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 80.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -112,27 +111,26 @@ fun JobPostScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         ProfileTextField("Job Title", jobTitle, true) { jobTitle = it }
-        ProfileTextArea("Job Description", jobDescription, true) { jobDescription = it }
-        ProfileTextArea("Responsibilities", responsibilities, true) { responsibilities = it }
         ProfileTextField("Fee", fee, true) { fee = it }
+        ProfileTextField("Responsibilities", responsibilities, true) { responsibilities = it }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DropdownField("Industry", industries.map { it.industryName }, selectedIndustry, Modifier.weight(1f)) {
-                selectedIndustry = it
-                industryCategoryViewModel.loadCategories(getIndustryId(it, industries))
-            }
-            DropdownField("Category", categories.map { it.categoryName }, selectedCategory, Modifier.weight(1f)) { selectedCategory = it }
-        }
+        DatePickerField("Start Date", startDate) { startDate = it }
+        DatePickerField("Due Date", dueDate) { dueDate = it }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DropdownField("City", cities.map { it.name }, selectedCity, Modifier.weight(1f)) { selectedCity = it }
-            DropdownField("Ward", wards.map { it.name }, selectedWard, Modifier.weight(1f)) { selectedWard = it }
-        }
+        ProfileTextArea("Job Description", jobDescription, true) { jobDescription = it }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DatePickerField("Start Date", startDate, Modifier.weight(1f)) { startDate = it }
-            DatePickerField("Due Date", dueDate, Modifier.weight(1f)) { dueDate = it }
+        DropdownField("Industry", industries.map { it.industryName }, selectedIndustry) {
+            selectedIndustry = it
+            industryCategoryViewModel.loadCategories(getIndustryId(it, industries))
         }
+        DropdownField(
+            "Category",
+            categories.map { it.categoryName },
+            selectedCategory
+        ) { selectedCategory = it }
+
+        DropdownField("City", cities.map { it.name }, selectedCity) { selectedCity = it }
+        DropdownField("Ward", wards.map { it.name }, selectedWard) { selectedWard = it }
 
         Spacer(modifier = Modifier.height(20.dp))
         Button(
@@ -154,7 +152,8 @@ fun JobPostScreen(
                     val response = jobService.postJob(accessToken, request)
                     isPosting = false
                     if (response != null) {
-                        Toast.makeText(context, "Job posted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Job posted successfully", Toast.LENGTH_SHORT)
+                            .show()
                         navController.popBackStack()
                     } else {
                         Toast.makeText(context, "Failed to post job", Toast.LENGTH_SHORT).show()
@@ -163,21 +162,23 @@ fun JobPostScreen(
             },
             colors = ButtonDefaults.buttonColors(Color.Red),
             shape = RoundedCornerShape(8.dp),
-            modifier = Modifier.width(280.dp).height(50.dp),
+            modifier = Modifier
+                .width(300.dp)
+                .height(55.dp),
             enabled = !isPosting
         ) {
             Text(if (isPosting) "Posting..." else "Post Job", color = Color.White)
         }
-        Spacer(Modifier.height(5.dp))
+        Spacer(Modifier.height(10.dp))
         Button(
             onClick = { navController.navigate(HomeDestination.route) },
             modifier = Modifier
-                .width(280.dp)
-                .height(50.dp),
+                .width(300.dp)
+                .height(55.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(Color.Gray)
         ) {
-            Text(text = "BACK TO HOME", color = Color.White)
+            Text(text = "Back", color = Color.White)
         }
     }
 }
@@ -195,7 +196,12 @@ fun formatDateForRequest(date: String): String {
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun DatePickerField(label: String, selectedDate: String, modifier: Modifier = Modifier, onDateSelected: (String) -> Unit) {
+fun DatePickerField(
+    label: String,
+    selectedDate: String,
+    modifier: Modifier = Modifier,
+    onDateSelected: (String) -> Unit
+) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
@@ -227,7 +233,13 @@ fun DatePickerField(label: String, selectedDate: String, modifier: Modifier = Mo
 }
 
 @Composable
-fun DropdownField(label: String, options: List<String>, selectedOption: String, modifier: Modifier = Modifier, onOptionSelected: (String) -> Unit) {
+fun DropdownField(
+    label: String,
+    options: List<String>,
+    selectedOption: String,
+    modifier: Modifier = Modifier,
+    onOptionSelected: (String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {

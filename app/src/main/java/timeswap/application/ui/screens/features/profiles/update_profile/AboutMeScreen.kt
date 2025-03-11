@@ -129,7 +129,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
             } else {
                 ProfileTextField("Full Name", "$firstName $lastName", false)
             }
-            ProfileTextField("Email", userProfile?.email ?: "N/A", false)
+            ProfileTextField("Email", userProfile?.email ?: "No Email Address", false)
             ProfileTextField("Phone", phone, isEditing) { phone = it }
             ProfileTextArea("Description", description, isEditing) { description = it }
 
@@ -158,7 +158,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     it, 2
                 )
             }
-                ?: "N/A", false)
+                ?: "No Subscription Plan", false)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -194,7 +194,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text(if (isEditing) "Save" else "Edit", color = Color.White)
+                Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
             }
 
 
@@ -207,7 +207,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text("Back", color = Color.White)
+                Text("Back", fontSize = 16.sp, color = Color.White)
             }
         }
     }

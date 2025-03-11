@@ -16,7 +16,7 @@ data class JobDetailResponse (
     val responsibilities: String,
     val fee: Double,
     val startDate: String?,
-    val dueDate: String?,
+    val dueDate: String,
     val assignedTo: String?,
     val isOwnerCompleted: Boolean,
     val isAssigneeCompleted: Boolean,
