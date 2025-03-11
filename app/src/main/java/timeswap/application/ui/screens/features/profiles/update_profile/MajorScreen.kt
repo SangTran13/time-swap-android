@@ -1,3 +1,4 @@
+
 package timeswap.application.ui.screens.features.profiles.update_profile
 
 import android.content.Context
@@ -38,6 +39,7 @@ import timeswap.application.network.services.UserRepository
 import timeswap.application.viewmodel.IndustryCategoryViewModel
 import timeswap.application.viewmodel.ProfileViewModel
 
+@Suppress("USELESS_ELVIS")
 @Composable
 fun MajorScreen(navController: NavController, industryCategoryViewModel: IndustryCategoryViewModel) {
     val userRepository = remember { UserRepository() }
@@ -67,8 +69,8 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            selectedIndustry = it.majorIndustry
-            selectedCategory = it.majorCategory
+            selectedIndustry = it.majorIndustry ?: ""
+            selectedCategory = it.majorCategory ?: ""
         }
     }
 

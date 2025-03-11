@@ -54,6 +54,7 @@ import timeswap.application.ui.screens.core.navigation.ProfileDestination
 import timeswap.application.viewmodel.LocationViewModel
 import timeswap.application.viewmodel.ProfileViewModel
 
+@Suppress("USELESS_ELVIS")
 @Composable
 fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewModel) {
     val userRepository = remember { UserRepository() }
@@ -96,11 +97,11 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            firstName = it.firstName
-            lastName = it.lastName
-            phone = it.phoneNumber
-            description = it.description
-            selectedWard = it.fullLocation
+            firstName = it.firstName ?: ""
+            lastName = it.lastName ?: ""
+            phone = it.phoneNumber ?: ""
+            description = it.description ?: ""
+            selectedWard = it.fullLocation ?: ""
             selectedCity = extractCity(it.fullLocation)
         }
     }
