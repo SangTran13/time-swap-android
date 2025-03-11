@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -102,7 +105,8 @@ fun EducationScreen(navController: NavController) {
             onEditToggle = {
                 if (isEditing) {
                     coroutineScope.launch {
-                        val updateRequest = UpdateProfileRequest(educationHistory = educationHistory)
+                        val updateRequest =
+                            UpdateProfileRequest(educationHistory = educationHistory)
                         val success = userRepository.updateUserProfile(accessToken, updateRequest)
                         if (success) {
                             profileViewModel.loadUserProfile(accessToken)
@@ -129,6 +133,7 @@ fun EducationList(
         state = reorderState.listState,
         modifier = Modifier
             .fillMaxSize()
+            .clip(RoundedCornerShape(12.dp))
             .reorderable(reorderState)
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -186,31 +191,38 @@ fun AddSchoolSection(
     onSchoolNameChange: (String) -> Unit,
     onAddSchool: () -> Unit
 ) {
+    Spacer(modifier = Modifier.height(20.dp))
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         OutlinedTextField(
             value = schoolName,
             onValueChange = onSchoolNameChange,
             label = { Text("Add a new school") },
-            modifier = Modifier
-                .weight(1f)
-                .height(56.dp)
+            modifier = Modifier.weight(1f).height(56.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Button(
             onClick = onAddSchool,
-            colors = ButtonDefaults.buttonColors(Color.Red),
             shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(Color.Red),
             modifier = Modifier
                 .size(56.dp)
+                .offset(y = 4.dp),
+            contentPadding = PaddingValues(0.dp)
         ) {
-            Text("+", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Add",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
         }
     }
 }
-
 
 
 @Composable
@@ -228,7 +240,7 @@ fun ButtonSection(
                 .width(300.dp)
                 .height(55.dp)
         ) {
-            Text(if (isEditing) "Save" else "Edit", color = Color.White)
+            Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
         }
         Spacer(modifier = Modifier.height(10.dp))
         Button(
@@ -239,7 +251,7 @@ fun ButtonSection(
                 .width(300.dp)
                 .height(55.dp)
         ) {
-            Text("Back", color = Color.White)
+            Text("Back", fontSize = 16.sp, color = Color.White)
         }
     }
 }

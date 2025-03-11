@@ -147,7 +147,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text(if (isEditing) "Save" else "Edit", color = Color.White)
+                Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -159,7 +159,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text("Back", color = Color.White)
+                Text("Back", fontSize = 16.sp, color = Color.White)
             }
         }
     }

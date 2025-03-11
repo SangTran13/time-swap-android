@@ -106,7 +106,7 @@ fun PaymentFormSection(
     Spacer(modifier = Modifier.height(12.dp))
     PaymentMethodSelection(paymentMethod) { paymentMethod = it }
 
-    Spacer(modifier = Modifier.height(24.dp))
+    Spacer(modifier = Modifier.height(20.dp))
     Button(
         onClick = {
             coroutineScope.launch {
@@ -121,28 +121,27 @@ fun PaymentFormSection(
             }
         },
         modifier = Modifier
-            .width(280.dp)
-            .height(50.dp)
+            .width(300.dp)
+            .height(55.dp)
             .focusRequester(payButtonFocus),
         shape = RoundedCornerShape(10.dp),
         enabled = amount.isNotEmpty() && note.isNotEmpty(),
         colors = ButtonDefaults.buttonColors(Color.Red)
     ) {
-        Text(text = "DEPOSIT MONEY", fontSize = 18.sp, color = Color.White)
+        Text(text = "Deposit Money", fontSize = 16.sp, color = Color.White)
     }
-
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 
     Button(
         onClick = onBackToHome,
         modifier = Modifier
-            .width(280.dp)
-            .height(50.dp)
+            .width(300.dp)
+            .height(55.dp)
             .focusRequester(backButtonFocus),
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(Color.Gray)
     ) {
-        Text(text = "BACK TO HOME", fontSize = 18.sp, color = Color.White)
+        Text(text = "Back", fontSize = 16.sp, color = Color.White)
     }
 }
 
@@ -218,8 +217,8 @@ fun PaymentMethodItem(
         modifier = Modifier
             .size(100.dp)
             .border(
-                width = if (isSelected) 0.5.dp else 0.dp,
-                color = if (isSelected) Color.Gray else Color.Transparent,
+                width = if (isSelected) 1.dp else 0.dp,
+                color = if (isSelected) Color(0xFFD6CDFE) else Color.Transparent,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(8.dp)

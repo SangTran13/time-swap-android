@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -90,7 +91,12 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
         Column(
             modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Change Password", fontSize = 30.sp, color = Color.Black)
+            Text(
+                text = "Change Password",
+                fontSize = 30.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Bold
+            )
             Spacer(modifier = Modifier.height(10.dp))
 
             PasswordTextField("Current Password", currentPassword) { currentPassword = it }
@@ -113,11 +119,10 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
                 if (isLoading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text(text = "CHANGE PASSWORD", color = Color.White)
+                    Text(text = "Change Password", fontSize = 16.sp, color = Color.White)
                 }
             }
-
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(
                 onClick = { onBackToHome() },
@@ -131,7 +136,7 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
                 if (isLoading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text(text = "BACK TO HOME", color = Color.White)
+                    Text(text = "Back", fontSize = 16.sp, color = Color.White)
                 }
             }
         }
