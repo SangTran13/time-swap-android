@@ -1,15 +1,12 @@
 package timeswap.application.network.services
 
-import android.widget.Toast
-
-import org.json.JSONObject
-
 import android.content.Context
 import android.content.SharedPreferences
-
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +14,6 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 import timeswap.application.BuildConfig
-
 import timeswap.application.data.request.ChangePasswordRequest
 import timeswap.application.data.request.ForgotPasswordRequest
 import timeswap.application.data.request.LoginRequest
@@ -25,8 +21,9 @@ import timeswap.application.data.request.RegisterRequest
 import timeswap.application.data.response.BaseResponse
 import timeswap.application.data.response.LoginResponse
 import timeswap.application.network.RetrofitClient.authService
-import timeswap.application.shared.constants.HttpResponseCodeConstants
+import timeswap.application.shared.constants.HttpResponseCodeConstants.Companion.UNAUTHORIZED
 import timeswap.application.shared.constants.StatusCodeConstants
+import timeswap.application.shared.constants.StatusCodeConstants.Companion.USER_NOT_CONFIRMED
 import timeswap.application.ui.utils.ApiUtils
 
 interface AuthService {
@@ -91,7 +88,7 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
                             val authData = response.body()?.data
                             authData?.let {
                                 saveTokens(it.accessToken, it.refreshToken, it.expiresIn)
-                                Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Login Successful!", LENGTH_SHORT)
                                     .show()
                                 onSuccess()
                             }
@@ -102,7 +99,7 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
                         val errorBody = response.errorBody()?.string()
                         val statusCode = ApiUtils.extractStatusCode(errorBody)
 
-                        if (response.code() == HttpResponseCodeConstants.UNAUTHORIZED && statusCode == StatusCodeConstants.USER_NOT_CONFIRMED) {
+                        if (response.code() == UNAUTHORIZED && statusCode == USER_NOT_CONFIRMED) {
                             onError("Please confirm your email before logging in.")
                         } else {
                             onError("Invalid credentials.")
