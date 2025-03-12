@@ -40,6 +40,12 @@ interface JobService {
         @Path("id") jobId: String,
         @Header("Authorization") token: String
     ): Response<BaseResponse<JobDetailResponse>>
+
+    @POST("applicants")
+    suspend fun applyJob(
+        @Header("Authorization") token: String,
+        @Body request: Map<String, String>
+    ): Response<BaseResponse<Unit>>
 }
 
 
@@ -108,6 +114,39 @@ class JobPostService {
                 null
             } catch (e: Exception) {
                 null
+            }
+        }
+    }
+
+    suspend fun applyJob(accessToken: String, jobPostId: String): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val requestBody = mapOf("jobPostId" to jobPostId)
+                val response = RetrofitClient.jobService.applyJob("Bearer $accessToken", requestBody)
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    when (body?.statusCode) {
+                        1000 -> {
+                            "Apply thành công!"
+                        }
+                        2031 -> {
+                            "Bạn không thể apply vào job của chính mình."
+                        }
+                        2052 -> {
+                            "Bạn đã apply công việc này rồi"
+                        }
+                        else -> {
+                            "Đã xảy ra lỗi vui lòng thử lại"
+                        }
+                    }
+                } else {
+                    "Error when apply job: ${response.errorBody()?.string()}"
+                }
+            } catch (e: HttpException) {
+                "Error network: ${e.message}"
+            } catch (e: Exception) {
+                "Error: ${e.message}"
             }
         }
     }
