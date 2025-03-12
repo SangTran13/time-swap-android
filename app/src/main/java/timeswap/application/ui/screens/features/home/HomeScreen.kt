@@ -31,6 +31,7 @@ import timeswap.application.ui.screens.features.home.sections.UserInfoSection
 import timeswap.application.ui.screens.features.home.sections.BannerSection
 import timeswap.application.ui.screens.features.home.sections.JobCategorySection
 import timeswap.application.ui.screens.features.home.sections.LocationMap
+import timeswap.application.ui.utils.ApiUtils
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -46,6 +47,11 @@ fun HomeScreen(navController: NavController) {
     val userProfile by profileViewModel.userProfile.collectAsState()
 
     LaunchedEffect(Unit) {
+        if (ApiUtils.checkExpiredToken(context)) {
+            ApiUtils.clearAccessToken(context)
+            navController.navigate("login")
+            return@LaunchedEffect
+        }
         if (accessToken.isNotEmpty()) {
             profileViewModel.loadUserProfile(accessToken)
         }
