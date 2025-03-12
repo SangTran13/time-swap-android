@@ -1,5 +1,6 @@
 package timeswap.application.ui.utils
 
+import android.content.Context
 import org.json.JSONObject
 
 /**
@@ -24,5 +25,17 @@ object ApiUtils {
             // In case of JSON parsing errors, return a default value of -1
             -1
         }
+    }
+
+    fun clearAccessToken(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().remove("accessToken").apply()
+    }
+
+    fun checkExpiredToken(context: Context) : Boolean {
+        val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+        val expiresAt = sharedPreferences.getLong("expiresAt", 0)
+        val currentTime =  System.currentTimeMillis()
+        return expiresAt <= currentTime
     }
 }

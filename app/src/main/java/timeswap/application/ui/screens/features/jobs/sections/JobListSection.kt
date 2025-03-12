@@ -8,17 +8,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,7 +46,11 @@ import timeswap.application.viewmodel.JobListUiState
 import timeswap.application.viewmodel.JobListViewModel
 
 @Composable
-fun JobListSection(requiredData: JobListUiState.Success, navController: NavController, viewModel: JobListViewModel) {
+fun JobListSection(
+    requiredData: JobListUiState.Success,
+    navController: NavController,
+    viewModel: JobListViewModel
+) {
     var isSwiping by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -62,7 +68,7 @@ fun JobListSection(requiredData: JobListUiState.Success, navController: NavContr
             }
         } else {
             LazyColumn(
-                contentPadding = PaddingValues(22.dp),
+                contentPadding = PaddingValues(22.dp, 22.dp, 22.dp, 120.dp),
                 modifier = Modifier.pointerInput(Unit) {
                     detectHorizontalDragGestures { _, dragAmount ->
                         if (dragAmount < -100 && requiredData.pageIndex < requiredData.totalPages) {
@@ -97,7 +103,8 @@ fun JobListSection(requiredData: JobListUiState.Success, navController: NavContr
                     else "Page ${requiredData.pageIndex} / ${requiredData.totalPages}",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Gray
+                    color = Color.Gray,
+                    modifier = Modifier.padding(bottom = 200.dp)
                 )
             }
         }
@@ -110,50 +117,64 @@ fun JobCard(job: JobPost, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(140.dp)
+            .height(180.dp)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 AsyncImage(
                     model = job.ownerAvatarUrl,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(50.dp)
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Column {
-                    Text(text = job.title, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
                 FilterChip(
                     text = job.category.categoryName,
                     selected = false,
                     onClick = { /* TODO: Thêm logic nếu cần */ },
-                    color = Color(0xFF2196F3)
-                )
-
-                FilterChip(
-                    text = job.ward.name,
-                    selected = false,
-                    onClick = { /* TODO: Thêm logic nếu cần */ },
-                    color = Color(0xFF4CAF50)
+                    color = Color(0xFFCBC9D4)
                 )
             }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = job.title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
             Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = job.ward.fullLocation,
+                fontSize = 12.sp,
+                color = Color(0xFF524B6B)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     CommonFunction.formatDateFromUTC(job.createdAt, 2),
                     fontSize = 12.sp,
-                    color = Color.Gray
+                    color = Color(0xFFAAA6B9)
                 )
                 Text(
                     text = CommonFunction.formatCurrency(job.fee),

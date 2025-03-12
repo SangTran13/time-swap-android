@@ -34,8 +34,8 @@ import timeswap.application.ui.screens.core.authentication.login.LoginScreen
 import timeswap.application.ui.screens.core.authentication.register.RegisterScreen
 import timeswap.application.ui.screens.features.chat.ChatScreen
 import timeswap.application.ui.screens.features.home.HomeScreen
-import timeswap.application.ui.screens.features.jobdetail.JobDetailScreen
-import timeswap.application.ui.screens.features.jobpost.JobPostScreen
+import timeswap.application.ui.screens.features.job_detail.JobDetailScreen
+import timeswap.application.ui.screens.features.job_post.JobPostScreen
 import timeswap.application.ui.screens.features.jobs.JobScreen
 import timeswap.application.ui.screens.features.on_board.OnboardingScreen
 import timeswap.application.ui.screens.features.payment.PaymentScreen

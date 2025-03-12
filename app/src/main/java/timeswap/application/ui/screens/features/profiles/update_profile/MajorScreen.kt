@@ -1,3 +1,4 @@
+
 package timeswap.application.ui.screens.features.profiles.update_profile
 
 import android.content.Context
@@ -38,6 +39,7 @@ import timeswap.application.network.services.UserRepository
 import timeswap.application.viewmodel.IndustryCategoryViewModel
 import timeswap.application.viewmodel.ProfileViewModel
 
+@Suppress("USELESS_ELVIS")
 @Composable
 fun MajorScreen(navController: NavController, industryCategoryViewModel: IndustryCategoryViewModel) {
     val userRepository = remember { UserRepository() }
@@ -67,8 +69,8 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            selectedIndustry = it.majorIndustry
-            selectedCategory = it.majorCategory
+            selectedIndustry = it.majorIndustry ?: ""
+            selectedCategory = it.majorCategory ?: ""
         }
     }
 
@@ -147,7 +149,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text(if (isEditing) "Save" else "Edit", color = Color.White)
+                Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -159,7 +161,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text("Back", color = Color.White)
+                Text("Back", fontSize = 16.sp, color = Color.White)
             }
         }
     }

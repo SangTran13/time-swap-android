@@ -54,6 +54,7 @@ import timeswap.application.ui.screens.core.navigation.ProfileDestination
 import timeswap.application.viewmodel.LocationViewModel
 import timeswap.application.viewmodel.ProfileViewModel
 
+@Suppress("USELESS_ELVIS")
 @Composable
 fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewModel) {
     val userRepository = remember { UserRepository() }
@@ -96,11 +97,11 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            firstName = it.firstName
-            lastName = it.lastName
-            phone = it.phoneNumber
-            description = it.description
-            selectedWard = it.fullLocation
+            firstName = it.firstName ?: ""
+            lastName = it.lastName ?: ""
+            phone = it.phoneNumber ?: ""
+            description = it.description ?: ""
+            selectedWard = it.fullLocation ?: ""
             selectedCity = extractCity(it.fullLocation)
         }
     }
@@ -129,7 +130,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
             } else {
                 ProfileTextField("Full Name", "$firstName $lastName", false)
             }
-            ProfileTextField("Email", userProfile?.email ?: "N/A", false)
+            ProfileTextField("Email", userProfile?.email ?: "No Email Address", false)
             ProfileTextField("Phone", phone, isEditing) { phone = it }
             ProfileTextArea("Description", description, isEditing) { description = it }
 
@@ -158,7 +159,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     it, 2
                 )
             }
-                ?: "N/A", false)
+                ?: "No Subscription Plan", false)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -194,7 +195,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text(if (isEditing) "Save" else "Edit", color = Color.White)
+                Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
             }
 
 
@@ -207,7 +208,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text("Back", color = Color.White)
+                Text("Back", fontSize = 16.sp, color = Color.White)
             }
         }
     }

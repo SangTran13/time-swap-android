@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -47,15 +46,15 @@ fun FilterSection(viewModel: IndustryCategoryViewModel, jobListViewModel: JobLis
     ) {
         Box(
             modifier = Modifier
-                .size(30.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFFFA726)),
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color(0xFFFFA726))
+                .padding(horizontal = 12.dp, vertical = 6.dp),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_filter),
                 contentDescription = "Filter",
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(20.dp),
                 tint = Color.White
             )
         }
@@ -85,13 +84,13 @@ fun FilterSection(viewModel: IndustryCategoryViewModel, jobListViewModel: JobLis
 
 
 @Composable
-fun FilterChip(text: String, selected: Boolean, onClick: () -> Unit, color: Color = Color.LightGray) {
+fun FilterChip(text: String, selected: Boolean, onClick: () -> Unit, color: Color = Color(0xFFCBC9D4)) {
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(if (selected) Color(0xFFFFA726) else color)
-            .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 8.dp)
+            .clickable { onClick() }
     ) {
         Text(text, color = Color.White, fontSize = 14.sp)
     }

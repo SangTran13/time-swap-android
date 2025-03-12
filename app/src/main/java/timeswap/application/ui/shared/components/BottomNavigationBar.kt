@@ -72,7 +72,7 @@ fun BottomNavigationBar(navController: NavController) {
                 navController = navController,
                 route = JobDestination.route,
                 iconRes = R.drawable.connection,
-                contentDescription = "Search",
+                contentDescription = "Job List",
                 isSelected = currentRoute == JobDestination.route
             )
 
@@ -81,8 +81,8 @@ fun BottomNavigationBar(navController: NavController) {
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                 modifier = Modifier
-                    .size(54.dp)
-                    .offset(y = (-12).dp),
+                    .size(58.dp)
+                    .offset(y = (-14).dp),
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Icon(
@@ -138,7 +138,7 @@ fun AddItemPopup(navController: NavController, onDismiss: () -> Unit) {
                     navController.navigate(HomeDestination.route)
                 }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEDE7F6))
             ) {
-                Text("BACK TO HOME", color = Color(0xFF12004F))
+                Text("Back To Home", color = Color(0xFF12004F))
             }
         }
     }, confirmButton = { })
