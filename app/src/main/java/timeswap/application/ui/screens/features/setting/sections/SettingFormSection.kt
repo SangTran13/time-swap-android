@@ -24,7 +24,6 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import timeswap.application.R
 import timeswap.application.network.services.UserRepository
-import timeswap.application.shared.utils.CommonFunction
 import timeswap.application.ui.screens.core.navigation.ChangePasswordDestination
 import timeswap.application.ui.screens.core.navigation.LoginDestination
 import timeswap.application.ui.screens.core.navigation.PaymentDestination
@@ -33,7 +32,7 @@ import timeswap.application.ui.screens.core.navigation.ProfileDestination
 @Composable
 fun SettingFormSection(
     fullName: String,
-    balance: Double,
+    balance: String,
     userRepository: UserRepository,
     navController: NavController,
     sharedPreferences: SharedPreferences
@@ -49,7 +48,7 @@ fun SettingFormSection(
     SettingItemWithValue(
         icon = R.drawable.ic_budget,
         title = "Balance",
-        value = CommonFunction.formatCurrency(balance),
+        value = balance,
         onClick = { navController.navigate(PaymentDestination.route) }
     )
 

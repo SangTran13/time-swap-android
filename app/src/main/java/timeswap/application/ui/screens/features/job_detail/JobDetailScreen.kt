@@ -2,7 +2,6 @@ package timeswap.application.ui.screens.features.job_detail
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +40,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,8 +54,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import kotlinx.coroutines.launch
 import timeswap.application.network.services.JobPostService
+import timeswap.application.ui.utils.ApiUtils
 import timeswap.application.viewmodel.JobDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,14 +70,11 @@ fun JobDetailScreen(
     }
     val accessToken = sharedPreferences.getString("accessToken", "") ?: ""
 
-
     val jobPostService = remember { JobPostService() }
 
     val jobDetailViewModel = remember { JobDetailViewModel(jobPostService) }
 
     val jobDetail by jobDetailViewModel.jobDetail.collectAsState()
-
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(jobId) {
         if (accessToken.isNotEmpty()) {
@@ -172,12 +167,7 @@ fun JobDetailScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
-                        onClick = {
-                            coroutineScope.launch {
-                                val result = jobPostService.applyJob(accessToken, jobId!!)
-                                Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
-                            }
-                        },
+                        onClick = { /* TODO: Apply Job */ },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD5D5)),
                         shape = RoundedCornerShape(10.dp)
