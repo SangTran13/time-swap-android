@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -19,14 +21,26 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         resValue("string", "google_maps_api_key", project.findProperty("GOOGLE_MAPS_API_KEY")?.toString() ?: "")
-
+/*
         buildConfigField("String", "BASE_AUTH_URL", "\"${project.properties["BASE_AUTH_URL"]}\"")
         buildConfigField("String", "BASE_API_URL", "\"${project.properties["BASE_API_URL"]}\"")
         buildConfigField("String", "BASE_GPT_URL", "\"${project.properties["BASE_GPT_URL"]}\"")
         buildConfigField("String", "KEY_GPT_API", "\"${project.properties["KEY_GPT_API"]}\"")
         buildConfigField("String", "KEY_ORGANIZATION_GPT_API", "\"${project.properties["KEY_ORGANIZATION_GPT_API"]}\"")
         buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"${project.properties["GOOGLE_MAPS_API_KEY"]}\"")
-        buildConfigField("String", "CONFIRM_EMAIL_AUTH_URL", "\"${project.properties["CONFIRM_EMAIL_AUTH_URL"]}\"")
+        buildConfigField("String", "CONFIRM_EMAIL_AUTH_URL", "\"${project.properties["CONFIRM_EMAIL_AUTH_URL"]}\"")*/
+
+        val properties = Properties()
+        val localPropertiesFile = project.rootProject.file("local.properties")
+        localPropertiesFile.inputStream().use { properties.load(it) }
+
+        buildConfigField("String", "BASE_AUTH_URL", "\"${properties.getProperty("BASE_AUTH_URL")}\"")
+        buildConfigField("String", "BASE_API_URL", "\"${properties.getProperty("BASE_API_URL")}\"")
+        buildConfigField("String", "BASE_GPT_URL", "\"${properties.getProperty("BASE_GPT_URL")}\"")
+        buildConfigField("String", "KEY_GPT_API", "\"${properties.getProperty("KEY_GPT_API")}\"")
+        buildConfigField("String", "KEY_ORGANIZATION_GPT_API", "\"${properties.getProperty("KEY_ORGANIZATION_GPT_API")}\"")
+        buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"${properties.getProperty("GOOGLE_MAPS_API_KEY")}\"")
+        buildConfigField("String", "CONFIRM_EMAIL_AUTH_URL", "\"${properties.getProperty("CONFIRM_EMAIL_AUTH_URL")}\"")
     }
 
     buildTypes {
