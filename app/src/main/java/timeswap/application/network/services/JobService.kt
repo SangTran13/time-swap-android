@@ -20,7 +20,6 @@ import timeswap.application.network.RetrofitClient
 import timeswap.application.shared.constants.AppConstants
 
 interface JobService {
-
     @POST("jobposts")
     suspend fun postJob(
         @Header("Authorization") token: String,
@@ -67,8 +66,6 @@ class JobPostService {
     }
 
     suspend fun getJobDetail(jobId: String, accessToken: String): JobDetailResponse? {
-
-
         return withContext(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.jobService.getJobDetail(jobId, "Bearer $accessToken")
