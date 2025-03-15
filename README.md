@@ -1,7 +1,7 @@
 # ⏳ TimeSwap - Time Exchange Platform  
 
 ## 📌 Overview  
-**TimeSwap (TS)** is an innovative **time exchange platform** designed to connect people who have free time with those who need assistance, primarily in **Education and Information Technology (IT)**. The platform enables users to **offer and receive help** based on their **skills, availability, and expertise**.  
+**TimeSwap (TS)** is an innovative **time exchange platform** designed to connect people who have free time with those who need assistance, primarily in **Service and Information Technology (IT)**. The platform enables users to **offer and receive help** based on their **skills, availability, and expertise**.  
 
 ---
 
