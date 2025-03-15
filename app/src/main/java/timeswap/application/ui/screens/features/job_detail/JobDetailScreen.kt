@@ -54,8 +54,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import timeswap.application.network.services.ApplicantsService
 import timeswap.application.network.services.JobPostService
-import timeswap.application.ui.utils.ApiUtils
+import timeswap.application.viewmodel.ApplicantViewModel
 import timeswap.application.viewmodel.JobDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,15 +72,20 @@ fun JobDetailScreen(
     val accessToken = sharedPreferences.getString("accessToken", "") ?: ""
 
     val jobPostService = remember { JobPostService() }
+    val applicantsService = remember { ApplicantsService() }
 
     val jobDetailViewModel = remember { JobDetailViewModel(jobPostService) }
 
+    val applicantViewModel = remember { ApplicantViewModel(applicantsService) }
+
     val jobDetail by jobDetailViewModel.jobDetail.collectAsState()
+    val applicantList by applicantViewModel.uiState.collectAsState()
 
     LaunchedEffect(jobId) {
         if (accessToken.isNotEmpty()) {
             jobId?.let { id ->
                 jobDetailViewModel.fetchJobDetail(id, accessToken)
+                applicantViewModel.fetchApplicantList(id, accessToken)
             }
         }
     }
@@ -161,9 +167,7 @@ fun JobDetailScreen(
 
                 // Nút Apply & View Profile
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
@@ -179,7 +183,11 @@ fun JobDetailScreen(
                             tint = Color(0xFFFC4646),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Apply", color = Color(0xFFFC4646), fontWeight = FontWeight.Medium)
+                        Text(
+                            text = "Apply",
+                            color = Color(0xFFFC4646),
+                            fontWeight = FontWeight.Medium
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -188,7 +196,8 @@ fun JobDetailScreen(
                         onClick = { /* TODO: View Profile */ },
                         modifier = Modifier.weight(1f),
                         border = BorderStroke(1.dp, Color(0xFFFFA6A6)),
-                        shape = RoundedCornerShape(10.dp)) {
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
                         Icon(
                             imageVector = Icons.Default.ArrowOutward,
                             contentDescription = "View Profile",
@@ -196,7 +205,11 @@ fun JobDetailScreen(
                             tint = Color(0xFFFC4646)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "View Profile", color = Color(0xFFFC4646), fontWeight = FontWeight.Medium)
+                        Text(
+                            text = "View Profile",
+                            color = Color(0xFFFC4646),
+                            fontWeight = FontWeight.Medium
+                        )
                     }
                 }
 
@@ -252,9 +265,14 @@ fun JobDetailScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                when (selectedTabIndex) {
-                    0 -> JobDetailContent(jobDetail!!)
-                    1 -> ApplicantsContent()
+                Box(modifier = Modifier.weight(1f)) {
+                    when (selectedTabIndex) {
+                        0 -> JobDetailContent(
+                            jobDetail = jobDetail!!,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        1 -> ApplicantsContent(applicantList, applicantViewModel)
+                    }
                 }
             }
         }

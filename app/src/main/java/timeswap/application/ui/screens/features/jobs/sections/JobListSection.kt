@@ -60,7 +60,7 @@ fun JobListSection(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No job lists found",
+                    text = "No job post found",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray

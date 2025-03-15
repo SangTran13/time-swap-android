@@ -1,6 +1,5 @@
 package timeswap.application.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +9,6 @@ import timeswap.application.data.response.JobDetailResponse
 import timeswap.application.network.services.JobPostService
 
 class JobDetailViewModel(private val repository: JobPostService) : ViewModel() {
-
     private val _jobDetail = MutableStateFlow<JobDetailResponse?>(null)
     val jobDetail: StateFlow<JobDetailResponse?> get() = _jobDetail
 
