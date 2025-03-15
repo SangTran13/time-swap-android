@@ -58,7 +58,7 @@
 ### 🛠️ Steps to Run the Project  
 1️⃣ Clone this repository:  
    ```sh
-   git clone [https://github.com/SangTran13/TimeSwap-Android.git](https://github.com/SangTran13/time-swap-android.git)
+   git clone https://github.com/SangTran13/time-swap-android.git
    ```  
 2️⃣ Open the project in **Android Studio**.  
 3️⃣ Sync **Gradle** and install dependencies.  
