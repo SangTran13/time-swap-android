@@ -107,7 +107,7 @@ fun ProfileSection(title: String, iconRes: Int, details: Any, navController: Nav
                         }
                     } else {
                         Text(
-                            text = "No details available",
+                            text = "Không có thông tin chi tiết.",
                             fontSize = 16.sp,
                             color = Color(0xFF424242)
                         )

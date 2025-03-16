@@ -60,7 +60,7 @@ fun JobListSection(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No job lists found",
+                    text = "Không có công việc nào!!",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray
@@ -99,8 +99,8 @@ fun JobListSection(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = if (requiredData.jobList.isEmpty()) "Page 0 / 0"
-                    else "Page ${requiredData.pageIndex} / ${requiredData.totalPages}",
+                    text = if (requiredData.jobList.isEmpty()) "Trang 0 / 0"
+                    else "Trang ${requiredData.pageIndex} / ${requiredData.totalPages}",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray,

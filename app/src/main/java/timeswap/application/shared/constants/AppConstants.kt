@@ -8,4 +8,5 @@ class AppConstants {
         const val PAGE_SIZE = 3
 
     }
+
 }

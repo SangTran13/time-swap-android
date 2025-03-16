@@ -22,9 +22,10 @@ import timeswap.application.ui.screens.features.setting.sections.SettingFormSect
 
 @Composable
 fun SettingsScreen(context: Context, navController: NavController) {
+
     val sharedPreferences = remember { context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE) }
     var fullName by remember { mutableStateOf("Unknown User") }
-    var balance by remember { mutableStateOf("₫0") }
+    var balance by remember { mutableDoubleStateOf(0.0) }
     val accessToken = sharedPreferences.getString("accessToken", null)
     val userRepository = remember { UserRepository() }
     val coroutineScope = rememberCoroutineScope()
@@ -34,7 +35,7 @@ fun SettingsScreen(context: Context, navController: NavController) {
             coroutineScope.launch {
                 val user = userRepository.getUserProfile(token)
                 fullName = user?.fullName ?: "Unknown User"
-                balance = (user?.balance ?: "0").toString()
+                balance = (user?.balance.toString()).toDouble()
             }
         }
     }
@@ -50,7 +51,7 @@ fun SettingsScreen(context: Context, navController: NavController) {
                 .padding(16.dp)
         ) {
             Text(
-                text = "Settings",
+                text = "Cài đặt",
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
@@ -60,4 +61,5 @@ fun SettingsScreen(context: Context, navController: NavController) {
             SettingFormSection(fullName, balance, userRepository, navController, sharedPreferences)
         }
     }
+
 }

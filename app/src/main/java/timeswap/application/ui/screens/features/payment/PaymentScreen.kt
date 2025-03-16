@@ -53,7 +53,7 @@ fun PaymentScreen(
                     email = it.email
                 }
             } else {
-                errorMessage = "Authentication token is missing"
+                errorMessage = "Xác thực không thành công. Vui lòng đăng nhập lại."
             }
         }
     }
@@ -69,7 +69,7 @@ fun PaymentScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Deposit Money",
+                text = "Nạp Tiền",
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -82,5 +82,3 @@ fun PaymentScreen(
         }
     }
 }
-
-

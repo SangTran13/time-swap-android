@@ -58,6 +58,7 @@ import timeswap.application.network.services.AuthServices
 fun LoginScreen(
     onForgotPassword: () -> Unit = {}, onSignUp: () -> Unit = {}, onNext: () -> Unit = {}
 ) {
+
     val context = LocalContext.current
     val sharedPreferences =
         remember { context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE) }
@@ -110,7 +111,7 @@ fun LoginScreen(
             modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome Back",
+                text = "Chào mừng trở lại",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -118,7 +119,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do usermod temper",
+                text = "TimeSwap (TS) là một ứng dụng được thiết kế để kết nối những người có thời gian rảnh với những người cần hỗ trợ.",
                 fontSize = 18.sp,
                 color = Color.Gray,
                 textAlign = TextAlign.Center
@@ -142,7 +143,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(value = password,
-                label = { Text("Password") },
+                label = { Text("Mật khẩu") },
                 onValueChange = { password = it },
                 visualTransformation = if (passwordVisible) androidx.compose.ui.text.input.VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -181,7 +182,7 @@ fun LoginScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Remember me",
+                        text = "Nhớ tài khoản",
                         fontSize = 16.sp,
                         color = Color.Gray,
                         textAlign = TextAlign.Left,
@@ -189,7 +190,7 @@ fun LoginScreen(
                 }
 
                 Text(
-                    text = "Forgot Password?",
+                    text = "Quên mật khẩu?",
                     fontSize = 16.sp,
                     color = Color.Black,
                     textAlign = TextAlign.Left,
@@ -197,6 +198,7 @@ fun LoginScreen(
                     textDecoration = TextDecoration.Underline
                 )
             }
+
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(onClick = { handleLogin() },
@@ -212,20 +214,21 @@ fun LoginScreen(
                             true
                         } else false
                     }) {
-                Text(text = "LOGIN", color = Color.White)
+                Text(text = "Đăng nhập", color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "You don't have an account yet?", color = Color.Gray)
+                Text(text = "Bạn chưa có tài khoản?", color = Color.Gray)
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "Sign Up",
+                Text(text = "Đăng ký",
                     color = Color(0xFFFFA500),
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable { onSignUp() })
             }
         }
     }
+
 }
 
 @Preview

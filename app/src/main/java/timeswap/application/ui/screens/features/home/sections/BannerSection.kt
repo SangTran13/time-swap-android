@@ -29,6 +29,7 @@ import timeswap.application.R
 
 @Composable
 fun BannerSection() {
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +56,7 @@ fun BannerSection() {
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(text = "Join Now", color = Color(0xFFFF6F61))
+                    Text(text = "Tham gia ngay", color = Color(0xFFFF6F61))
                 }
             }
 
@@ -69,4 +70,5 @@ fun BannerSection() {
             )
         }
     }
+
 }

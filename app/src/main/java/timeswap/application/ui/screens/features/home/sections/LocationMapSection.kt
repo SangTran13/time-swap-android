@@ -38,7 +38,7 @@ fun LocationMap(context: Context) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Location Map",
+            text = "Bản đồ vị trí",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
@@ -125,10 +125,12 @@ fun LocationMap(context: Context) {
             }
         }
     }
+
 }
 
 @Composable
 fun GetCurrentLocation(context: Context, onLocationReceived: (LatLng) -> Unit) {
+
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
 
     val locationPermission = rememberLauncherForActivityResult(
@@ -161,4 +163,5 @@ fun GetCurrentLocation(context: Context, onLocationReceived: (LatLng) -> Unit) {
             locationPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
+
 }

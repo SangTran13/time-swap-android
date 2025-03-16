@@ -7,6 +7,7 @@ import java.util.Locale
 import java.util.TimeZone
 
 object CommonFunction {
+
     fun formatDateFromUTC(utcDate: String, formatType: Int): String {
         return try {
 
@@ -32,7 +33,7 @@ object CommonFunction {
             val date = utcFormat.parse(utcDate)
             localFormat.format(date!!)
         } catch (e: Exception) {
-            "Invalid date format"
+            "Định dạng ngày không hợp lệ"
         }
     }
 

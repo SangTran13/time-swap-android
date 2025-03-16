@@ -3,6 +3,7 @@ package timeswap.application.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timeswap.application.BuildConfig
+import timeswap.application.network.services.ApplicantService
 import timeswap.application.network.services.AuthService
 import timeswap.application.network.services.CategoryService
 import timeswap.application.network.services.ChatService
@@ -47,7 +48,6 @@ object RetrofitClient {
         authRetrofit.create(UserService::class.java)
     }
 
-
     // apiRetrofit
 
     val paymentService: PaymentService by lazy {
@@ -56,6 +56,10 @@ object RetrofitClient {
 
     val jobService: JobService by lazy {
         apiRetrofit.create(JobService::class.java)
+    }
+
+    val applicantService: ApplicantService by lazy {
+        apiRetrofit.create(ApplicantService::class.java)
     }
 
     val locationService: LocationService by lazy {
@@ -71,7 +75,6 @@ object RetrofitClient {
     }
 
     // chatRetrofit
-
     val chatService: ChatService by lazy {
         chatRetrofit.create(ChatService::class.java)
     }

@@ -42,6 +42,7 @@ import timeswap.application.viewmodel.ChatViewModel
 
 @Composable
 fun ChatScreen(navController: NavController, viewModel: ChatViewModel = viewModel()) {
+
     val chatMessages by viewModel.chatMessages.collectAsState()
 
     var userInput by remember { mutableStateOf(TextFieldValue("")) }
@@ -109,10 +110,12 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = viewMode
             }
         }
     }
+
 }
 
 @Composable
 fun ChatBubble(message: ChatMessage) {
+
     val isUser = message.role == "user"
 
     Row(
@@ -133,6 +136,7 @@ fun ChatBubble(message: ChatMessage) {
             )
         }
     }
+
 }
 
 @Preview

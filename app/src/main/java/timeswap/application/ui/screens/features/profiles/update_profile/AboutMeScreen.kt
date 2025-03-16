@@ -113,11 +113,11 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
         contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "About Me",
+                text = "Thông tin cá nhân",
                 fontSize = 30.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
@@ -125,18 +125,18 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
             Spacer(modifier = Modifier.height(10.dp))
 
             if (isEditing) {
-                ProfileTextField("First Name", firstName, isEditing) { firstName = it }
-                ProfileTextField("Last Name", lastName, isEditing) { lastName = it }
+                ProfileTextField("Họ", lastName, isEditing) { lastName = it }
+                ProfileTextField("Tên", firstName, isEditing) { firstName = it }
             } else {
-                ProfileTextField("Full Name", "$firstName $lastName", false)
+                ProfileTextField("Họ và tên", "$lastName $firstName", false)
             }
             ProfileTextField("Email", userProfile?.email ?: "No Email Address", false)
-            ProfileTextField("Phone", phone, isEditing) { phone = it }
-            ProfileTextArea("Description", description, isEditing) { description = it }
+            ProfileTextField("Số điện thoại", phone, isEditing) { phone = it }
+            ProfileTextArea("Mô tả", description, isEditing) { description = it }
 
             if (isEditing) {
                 DropdownField(
-                    label = "City",
+                    label = "Tỉnh/Thành phố",
                     options = cities.map { it.name }.ifEmpty { listOf("Loading...") },
                     selectedOption = selectedCity
                 ) { city ->
@@ -146,7 +146,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                 }
 
                 DropdownField(
-                    label = "Ward",
+                    label = "Địa chỉ",
                     options = if (wards.isNotEmpty()) wards.map { it.name } else listOf("Loading..."),
                     selectedOption = selectedWard
                 ) { selectedWard = it }
@@ -154,12 +154,12 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                 ProfileTextField("Location", selectedWard, false)
             }
 
-            ProfileTextField("Subscription Expired Date", userProfile?.subscriptionExpiryDate?.let {
+            ProfileTextField("Ngày hết hạn đăng ký gói", userProfile?.subscriptionExpiryDate?.let {
                 CommonFunction.formatDateFromUTC(
                     it, 2
                 )
             }
-                ?: "No Subscription Plan", false)
+                ?: "Không giới hạn", false)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -195,7 +195,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
+                Text(if (isEditing) "Lưu" else "Chỉnh sửa", fontSize = 16.sp, color = Color.White)
             }
 
 
@@ -208,7 +208,7 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text("Back", fontSize = 16.sp, color = Color.White)
+                Text("Trở về", fontSize = 16.sp, color = Color.White)
             }
         }
     }
@@ -280,8 +280,6 @@ fun DropdownField(label: String, options: List<String>, selectedOption: String, 
     Spacer(modifier = Modifier.height(12.dp))
 }
 
-
-
 @Composable
 fun ProfileTextArea(label: String, value: String, isEditable: Boolean, onValueChange: (String) -> Unit) {
     OutlinedTextField(
@@ -317,5 +315,3 @@ fun getCityId(cityName: String, cities: List<City>): String {
 fun getWardId(wardName: String, wards: List<Ward>): String {
     return wards.firstOrNull { it.name.equals(wardName, ignoreCase = true) }?.id ?: ""
 }
-
-

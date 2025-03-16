@@ -35,6 +35,7 @@ import timeswap.application.ui.utils.ApiUtils
 
 @Composable
 fun HomeScreen(navController: NavController) {
+
     val context = LocalContext.current
     val sharedPreferences: SharedPreferences = remember {
         context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
@@ -77,4 +78,5 @@ fun HomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.weight(1f))
         }
     }
+
 }

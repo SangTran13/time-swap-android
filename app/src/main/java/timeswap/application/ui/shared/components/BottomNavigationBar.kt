@@ -118,10 +118,10 @@ fun BottomNavigationBar(navController: NavController) {
 @Composable
 fun AddItemPopup(navController: NavController, onDismiss: () -> Unit) {
     AlertDialog(onDismissRequest = onDismiss, containerColor = Color.White, title = {
-        Text("What would you like to add?", fontWeight = FontWeight.Bold)
+        Text("Bạn muốn thêm gì?", fontWeight = FontWeight.Bold)
     }, text = {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Would you like to post your tips and experiences or create a job?")
+            Text("Bạn có muốn đăng mẹo và kinh nghiệm của mình hoặc tạo việc làm không?")
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
@@ -129,7 +129,7 @@ fun AddItemPopup(navController: NavController, onDismiss: () -> Unit) {
                     navController.navigate(JobPostDestination.route)
                 }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
             ) {
-                Text("POST A JOB", color = Color.White)
+                Text("Đăng việc làm", color = Color.White)
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
@@ -138,7 +138,7 @@ fun AddItemPopup(navController: NavController, onDismiss: () -> Unit) {
                     navController.navigate(HomeDestination.route)
                 }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEDE7F6))
             ) {
-                Text("Back To Home", color = Color(0xFF12004F))
+                Text("Trở về trang chủ", color = Color(0xFF12004F))
             }
         }
     }, confirmButton = { })
@@ -178,5 +178,3 @@ fun BottomNavigationBarPreview() {
     val navController = NavController(LocalContext.current)
     BottomNavigationBar(navController)
 }
-
-

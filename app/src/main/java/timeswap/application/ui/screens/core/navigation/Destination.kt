@@ -45,6 +45,11 @@ object SettingsDestination : Destination {
     override val title = "Settings"
 }
 
+object JobPostDestination : Destination {
+    override val route = "job_post"
+    override val title = "Job Post"
+}
+
 object JobDestination : Destination {
     override val route = "job"
     override val title = "Job"
@@ -78,9 +83,4 @@ object EditEducationDestination : Destination {
 object ChatDestination : Destination {
     override val route = "chat"
     override val title = "Chat"
-}
-
-object JobPostDestination : Destination {
-    override val route = "job_post"
-    override val title = "Job Post"
 }

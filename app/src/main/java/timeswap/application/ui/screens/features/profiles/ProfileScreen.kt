@@ -56,23 +56,23 @@ fun ProfileScreen(navController: NavController?) {
         ProfileHeaderSection(userProfile, navController)
 
         ProfileSection(
-            title = "About me",
+            title = "Thông tin cá nhân",
             iconRes = R.drawable.ic_about_me,
-            details = userProfile?.description ?: "No information available",
+            details = userProfile?.description ?: "Không có thông tin chi tiết.",
             navController = navController,
             destinationRoute = EditAboutMeDestination.route
         )
 
         ProfileSection(
-            title = "Major",
+            title = "Ngành nghề",
             iconRes = R.drawable.ic_major,
-            details = userProfile?.majorIndustry ?: "No major specified",
+            details = userProfile?.majorIndustry ?: "Không có ngành nghề chi tiết.",
             navController = navController,
             destinationRoute = EditMajorDestination.route
         )
 
         ProfileSection(
-            title = "Education",
+            title = "Học vấn",
             iconRes = R.drawable.ic_education,
             details = userProfile?.educationHistory ?: emptyList<String>(),
             navController = navController,

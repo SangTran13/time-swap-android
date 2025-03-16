@@ -56,7 +56,6 @@ fun HeaderSearchSection(viewModel: JobListViewModel) {
     }
 }
 
-
 @Composable
 fun SearchBar(viewModel: JobListViewModel) {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
@@ -78,7 +77,7 @@ fun SearchBar(viewModel: JobListViewModel) {
         Box(modifier = Modifier.fillMaxWidth()) {
             if (textState.text.isEmpty()) {
                 Text(
-                    text = "Search...",
+                    text = "Tìm kiếm...",
                     color = Color.Gray,
                     fontSize = 16.sp
                 )

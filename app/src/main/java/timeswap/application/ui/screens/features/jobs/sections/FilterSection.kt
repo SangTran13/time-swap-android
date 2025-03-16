@@ -81,8 +81,6 @@ fun FilterSection(viewModel: IndustryCategoryViewModel, jobListViewModel: JobLis
     }
 }
 
-
-
 @Composable
 fun FilterChip(text: String, selected: Boolean, onClick: () -> Unit, color: Color = Color(0xFFCBC9D4)) {
     Box(
@@ -95,5 +93,3 @@ fun FilterChip(text: String, selected: Boolean, onClick: () -> Unit, color: Colo
         Text(text, color = Color.White, fontSize = 14.sp)
     }
 }
-
-

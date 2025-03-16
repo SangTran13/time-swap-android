@@ -3,11 +3,9 @@ package timeswap.application.ui.screens.features.jobs
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -60,7 +58,7 @@ fun JobScreen(navController: NavController, viewModel: JobListViewModel, industr
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("Loading...", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text("Đang tải...", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     }
                 }
 

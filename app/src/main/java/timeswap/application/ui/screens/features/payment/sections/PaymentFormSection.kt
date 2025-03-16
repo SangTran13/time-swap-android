@@ -57,7 +57,7 @@ private suspend fun onPayClick(
             note = note,
             paymentMethod = paymentMethod,
             onSuccess = onBackToHome,
-            onError = { error -> Log.e("PaymentError", "Payment failed: $error") }
+            onError = { error -> Log.e("PaymentError", "Thanh toán thất bại: $error") }
         )
     }
 }
@@ -89,11 +89,11 @@ fun PaymentFormSection(
 
     val coroutineScope = rememberCoroutineScope()
 
-    PaymentTextField("Full Name", fullName, { fullName = it }, fullNameFocus, phoneFocus)
-    PaymentTextField("Phone Number", phoneNumber, { phoneNumber = it }, phoneFocus, emailFocus)
+    PaymentTextField("Họ tên", fullName, { fullName = it }, fullNameFocus, phoneFocus)
+    PaymentTextField("Số điện thoại", phoneNumber, { phoneNumber = it }, phoneFocus, emailFocus)
     PaymentTextField("Email", email, { email = it }, emailFocus, amountFocus)
     PaymentTextField(
-        "Deposit Amount",
+        "Số tiền nạp",
         amount,
         { if (it.all { char -> char.isDigit() }) amount = it },
         amountFocus,
@@ -128,7 +128,7 @@ fun PaymentFormSection(
         enabled = amount.isNotEmpty() && note.isNotEmpty(),
         colors = ButtonDefaults.buttonColors(Color.Red)
     ) {
-        Text(text = "Deposit Money", fontSize = 16.sp, color = Color.White)
+        Text(text = "Nạp tiền", fontSize = 16.sp, color = Color.White)
     }
     Spacer(modifier = Modifier.height(10.dp))
 
@@ -141,7 +141,7 @@ fun PaymentFormSection(
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(Color.Gray)
     ) {
-        Text(text = "Back", fontSize = 16.sp, color = Color.White)
+        Text(text = "Trở về", fontSize = 16.sp, color = Color.White)
     }
 }
 
@@ -181,7 +181,7 @@ fun TransactionNoteField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text("Transaction Note") },
+        label = { Text("Nội dung chuyển khoản") },
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)

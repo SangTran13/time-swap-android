@@ -40,10 +40,12 @@ interface JobService {
         @Path("id") jobId: String,
         @Header("Authorization") token: String
     ): Response<BaseResponse<JobDetailResponse>>
+
 }
 
 
 class JobPostService {
+
     suspend fun getJobLists(industryId: Int?, search: String?, pageIndex: Int, pageSize: Int): JobPostResponse? {
         return withContext(Dispatchers.IO) {
             try {
@@ -67,8 +69,6 @@ class JobPostService {
     }
 
     suspend fun getJobDetail(jobId: String, accessToken: String): JobDetailResponse? {
-
-
         return withContext(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.jobService.getJobDetail(jobId, "Bearer $accessToken")
@@ -111,6 +111,7 @@ class JobPostService {
             }
         }
     }
+
 }
 
 

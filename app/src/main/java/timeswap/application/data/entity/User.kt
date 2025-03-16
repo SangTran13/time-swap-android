@@ -1,6 +1,7 @@
 package timeswap.application.data.entity
 
 data class User(
+
     val id: String,
     val email: String,
     val fullName: String,
@@ -17,4 +18,5 @@ data class User(
     val educationHistory: List<String>,
     val majorCategory: String,
     val majorIndustry: String
+
 )

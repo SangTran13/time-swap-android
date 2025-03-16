@@ -7,4 +7,5 @@ class HttpResponseCodeConstants {
         const val UNAUTHORIZED = 401
 
     }
+
 }
