@@ -49,6 +49,7 @@ object RetrofitClient {
     }
 
     // apiRetrofit
+
     val paymentService: PaymentService by lazy {
         apiRetrofit.create(PaymentService::class.java)
     }
@@ -77,4 +78,5 @@ object RetrofitClient {
     val chatService: ChatService by lazy {
         chatRetrofit.create(ChatService::class.java)
     }
+
 }

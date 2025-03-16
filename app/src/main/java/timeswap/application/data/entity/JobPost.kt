@@ -1,6 +1,7 @@
 package timeswap.application.data.entity
 
 data class JobPost(
+
     val id: String,
     val userId: String,
     val ownerAvatarUrl: String,
@@ -19,5 +20,5 @@ data class JobPost(
     val ward: Ward,
     val createdAt: String,
     val modifiedAt: String?
-)
 
+)

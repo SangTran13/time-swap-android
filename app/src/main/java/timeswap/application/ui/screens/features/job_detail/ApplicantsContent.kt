@@ -70,7 +70,7 @@ fun ApplicantsContent(
                 if (uiState.applicantList.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(
-                            text = "No one applied for this job",
+                            text = "Không có người ứng tuyển nào!!",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Gray

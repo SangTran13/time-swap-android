@@ -1,6 +1,7 @@
 package timeswap.application.data.request
 
 data class JobPostRequest(
+
     val title: String,
     val description: String,
     val responsibilities: String,
@@ -11,4 +12,5 @@ data class JobPostRequest(
     val industryId: Int,
     val wardId: String,
     val cityId: String
+
 )

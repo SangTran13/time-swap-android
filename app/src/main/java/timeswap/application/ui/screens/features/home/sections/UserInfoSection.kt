@@ -31,7 +31,7 @@ fun UserInfoSection(fullName: String, avatarUrl: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
-            Text(text = "Hello", fontSize = 20.sp, fontWeight = FontWeight.Light)
+            Text(text = "Xin chào,", fontSize = 20.sp, fontWeight = FontWeight.Light)
             Text(text = "$fullName.", fontSize = 28.sp, fontWeight = FontWeight.Bold)
         }
         Image(
@@ -45,4 +45,5 @@ fun UserInfoSection(fullName: String, avatarUrl: String) {
             contentScale = ContentScale.Crop
         )
     }
+
 }

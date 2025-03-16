@@ -34,8 +34,8 @@ interface PaymentService {
         @Query("orderCode") orderCode: String,
         @Query("cancel") cancel: Boolean
     ): Response<BaseResponse<String>>
-}
 
+}
 
 class PaymentRepository(private val context: Context) {
 
@@ -48,7 +48,7 @@ class PaymentRepository(private val context: Context) {
         onError: (String) -> Unit
     ) {
         if (token.isNullOrEmpty()) {
-            onError("Authentication token is missing")
+            onError("Thiếu thông tin xác thực")
             return
         }
 
@@ -67,11 +67,11 @@ class PaymentRepository(private val context: Context) {
                             onError(baseResponse.message)
                         }
                     } else {
-                        onError("Unexpected response format")
+                        onError("Định dạng không hợp lệ!")
                     }
                 } else {
-                    val errorBody = response.errorBody()?.string() ?: "Unknown error"
-                    onError("Payment failed: $errorBody")
+                    val errorBody = response.errorBody()?.string() ?: "Lỗi không xác định!"
+                    onError("Thanh toán thất bại: $errorBody")
                 }
             }
         } catch (e: Exception) {
@@ -95,7 +95,7 @@ class PaymentRepository(private val context: Context) {
         onResult: (Boolean, String) -> Unit
     ) {
         if (status.isNullOrEmpty() || code.isNullOrEmpty() || paymentId.isNullOrEmpty() || orderCode.isNullOrEmpty()) {
-            onResult(false, "Invalid payment verification data")
+            onResult(false, "Không xác định được thông tin thanh toán")
             return
         }
 
@@ -113,13 +113,14 @@ class PaymentRepository(private val context: Context) {
                     response.body()?.let { baseResponse ->
                         val isSuccess = baseResponse.statusCode == StatusCodeConstants.SUCCESS_CODE
                         onResult(isSuccess, baseResponse.message)
-                    } ?: onResult(false, "Invalid response from the server")
+                    } ?: onResult(false, "Thanh toán thất bại")
                 } else {
-                    onResult(false, "Error: ${response.errorBody()?.string()}")
+                    onResult(false, "Lỗi: ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
-                onResult(false, "Error: ${e.message}")
+                onResult(false, "Lỗi: ${e.message}")
             }
         }
     }
+
 }

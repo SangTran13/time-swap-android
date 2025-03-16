@@ -21,6 +21,7 @@ import timeswap.application.R.drawable
 
 @Composable
 fun SplashScreen() {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,6 +41,7 @@ fun SplashScreen() {
             )
         }
     }
+
 }
 
 @Preview

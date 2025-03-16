@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -87,11 +89,11 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
         contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Major",
+                text = "Ngành nghề",
                 fontSize = 30.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
@@ -100,7 +102,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
 
             if (isEditing) {
                 DropdownField(
-                    label = "Industry",
+                    label = "Ngành",
                     options = industries.map { it.industryName },
                     selectedOption = selectedIndustry
                 ) { industry ->
@@ -110,7 +112,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                 }
 
                 DropdownField(
-                    label = "Category",
+                    label = "Danh mục",
                     options = if (categories.isNotEmpty()) categories.map { it.categoryName } else emptyList(),
                     selectedOption = selectedCategory
                 ) { selectedCategory = it }
@@ -149,7 +151,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text(if (isEditing) "Save" else "Edit", fontSize = 16.sp, color = Color.White)
+                Text(if (isEditing) "Lưu" else "Chỉnh sửa", fontSize = 16.sp, color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -161,7 +163,7 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
                     .width(300.dp)
                     .height(55.dp)
             ) {
-                Text("Back", fontSize = 16.sp, color = Color.White)
+                Text("Trở về", fontSize = 16.sp, color = Color.White)
             }
         }
     }
@@ -174,4 +176,3 @@ fun getIndustryId(industryName: String, industries: List<Industry>): Int? {
 fun getCategoryId(categoryName: String, categories: List<Category>): Int? {
     return categories.find { it.categoryName == categoryName }?.id
 }
-

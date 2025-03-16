@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import timeswap.application.ui.screens.core.navigation.NavRegister
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -17,4 +18,5 @@ class MainActivity : ComponentActivity() {
             NavRegister(this)
         }
     }
+
 }

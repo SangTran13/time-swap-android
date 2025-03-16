@@ -107,30 +107,30 @@ fun JobPostScreen(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Post a Job", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+        Text("Đăng công việc mới", fontSize = 30.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(10.dp))
 
-        ProfileTextField("Job Title", jobTitle, true) { jobTitle = it }
-        ProfileTextField("Fee", fee, true) { fee = it }
-        ProfileTextField("Responsibilities", responsibilities, true) { responsibilities = it }
+        ProfileTextField("Tiêu đề", jobTitle, true) { jobTitle = it }
+        ProfileTextField("Phí", fee, true) { fee = it }
+        ProfileTextField("Trách nhiệm công việc", responsibilities, true) { responsibilities = it }
 
-        DatePickerField("Start Date", startDate) { startDate = it }
-        DatePickerField("Due Date", dueDate) { dueDate = it }
+        DatePickerField("Ngày bắt đầu", startDate) { startDate = it }
+        DatePickerField("Ngày hết hạn", dueDate) { dueDate = it }
 
-        ProfileTextArea("Job Description", jobDescription, true) { jobDescription = it }
+        ProfileTextArea("Mô tả công việc", jobDescription, true) { jobDescription = it }
 
-        DropdownField("Industry", industries.map { it.industryName }, selectedIndustry) {
+        DropdownField("Ngành", industries.map { it.industryName }, selectedIndustry) {
             selectedIndustry = it
             industryCategoryViewModel.loadCategories(getIndustryId(it, industries))
         }
         DropdownField(
-            "Category",
+            "Danh mục",
             categories.map { it.categoryName },
             selectedCategory
         ) { selectedCategory = it }
 
-        DropdownField("City", cities.map { it.name }, selectedCity) { selectedCity = it }
-        DropdownField("Ward", wards.map { it.name }, selectedWard) { selectedWard = it }
+        DropdownField("Tỉnh/Thành phố", cities.map { it.name }, selectedCity) { selectedCity = it }
+        DropdownField("Địa chỉ đầy đủ", wards.map { it.name }, selectedWard) { selectedWard = it }
 
         Spacer(modifier = Modifier.height(20.dp))
         Button(
@@ -152,11 +152,11 @@ fun JobPostScreen(
                     val response = jobService.postJob(accessToken, request)
                     isPosting = false
                     if (response != null) {
-                        Toast.makeText(context, "Job posted successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(context, "Đăng công việc thành công!!", Toast.LENGTH_SHORT)
                             .show()
                         navController.popBackStack()
                     } else {
-                        Toast.makeText(context, "Failed to post job", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Tài khoản của bạn không đủ tiền để đăng công việc!!", Toast.LENGTH_SHORT).show()
                     }
                 }
             },
@@ -167,7 +167,7 @@ fun JobPostScreen(
                 .height(55.dp),
             enabled = !isPosting
         ) {
-            Text(if (isPosting) "Posting..." else "Post Job", color = Color.White)
+            Text(if (isPosting) "Đăng bài..." else "Đăng việc làm", color = Color.White)
         }
         Spacer(Modifier.height(10.dp))
         Button(
@@ -288,4 +288,3 @@ fun getCityId(name: String, cities: List<City>): String {
 fun getWardId(name: String, wards: List<Ward>): String {
     return wards.find { it.name == name }?.id ?: ""
 }
-

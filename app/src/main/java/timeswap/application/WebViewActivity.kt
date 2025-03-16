@@ -95,4 +95,5 @@ class WebViewActivity : ComponentActivity() {
         startActivity(intent)
         finish()
     }
+
 }

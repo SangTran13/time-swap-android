@@ -13,6 +13,7 @@ interface ChatService {
 }
 
 class ChatRepository {
+
     suspend fun sendMessage(messages: List<ChatMessage>): String? {
         return try {
             val response = RetrofitClient.chatService.getChatResponse(ChatRequest(messages = messages))
@@ -22,4 +23,5 @@ class ChatRepository {
             "Lỗi API: ${e.localizedMessage}"
         }
     }
+
 }

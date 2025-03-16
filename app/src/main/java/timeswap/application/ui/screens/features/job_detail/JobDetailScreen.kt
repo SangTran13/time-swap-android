@@ -2,6 +2,7 @@ package timeswap.application.ui.screens.features.job_detail
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +41,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,6 +56,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 import timeswap.application.network.services.ApplicantsService
 import timeswap.application.network.services.JobPostService
 import timeswap.application.viewmodel.ApplicantViewModel
@@ -62,8 +65,7 @@ import timeswap.application.viewmodel.JobDetailViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JobDetailScreen(
-    navController: NavController,
-    jobId: String?
+    navController: NavController, jobId: String?
 ) {
     val context = LocalContext.current
     val sharedPreferences: SharedPreferences = remember {
@@ -81,6 +83,8 @@ fun JobDetailScreen(
     val jobDetail by jobDetailViewModel.jobDetail.collectAsState()
     val applicantList by applicantViewModel.uiState.collectAsState()
 
+    val coroutineScope = rememberCoroutineScope()
+
     LaunchedEffect(jobId) {
         if (accessToken.isNotEmpty()) {
             jobId?.let { id ->
@@ -96,29 +100,23 @@ fun JobDetailScreen(
 
         val userCity = jobDetail!!.ownerLocation.split(",").last().trim()
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
-                    },
-                    title = { },
-                    actions = {
-                        IconButton(onClick = { }) {
-                            Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More")
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White
+        Scaffold(topBar = {
+            TopAppBar(navigationIcon = {
+                IconButton(onClick = { navController.navigateUp() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
                     )
-                )
-            }
-        ) { innerPadding ->
+                }
+            }, title = { }, actions = {
+                IconButton(onClick = { }) {
+                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More")
+                }
+            }, colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.White
+            )
+            )
+        }) { innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -151,9 +149,7 @@ fun JobDetailScreen(
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = jobDetail!!.title,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
+                            text = jobDetail!!.title, fontSize = 18.sp, fontWeight = FontWeight.Bold
                         )
                         Text(
                             text = "${jobDetail!!.ownerName} • $userCity",
@@ -171,7 +167,12 @@ fun JobDetailScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
-                        onClick = { /* TODO: Apply Job */ },
+                        onClick = {
+                            coroutineScope.launch {
+                                val result = applicantsService.applyJob(accessToken, jobId!!)
+                                Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                            }
+                        },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD5D5)),
                         shape = RoundedCornerShape(10.dp)
@@ -184,7 +185,7 @@ fun JobDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Apply",
+                            text = "Ứng tuyển",
                             color = Color(0xFFFC4646),
                             fontWeight = FontWeight.Medium
                         )
@@ -206,7 +207,7 @@ fun JobDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "View Profile",
+                            text = "Xem hồ sơ",
                             color = Color(0xFFFC4646),
                             fontWeight = FontWeight.Medium
                         )
@@ -238,7 +239,7 @@ fun JobDetailScreen(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                "Job Detail",
+                                "Chi tiết công việc",
                                 color = if (selectedTabIndex == 0) Color.White else Color.Gray,
                                 fontWeight = FontWeight.Bold
                             )
@@ -255,7 +256,7 @@ fun JobDetailScreen(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                "Applicants",
+                                "Ứng viên",
                                 color = if (selectedTabIndex == 1) Color.White else Color.Gray,
                                 fontWeight = FontWeight.Bold
                             )
@@ -268,9 +269,9 @@ fun JobDetailScreen(
                 Box(modifier = Modifier.weight(1f)) {
                     when (selectedTabIndex) {
                         0 -> JobDetailContent(
-                            jobDetail = jobDetail!!,
-                            modifier = Modifier.fillMaxSize()
+                            jobDetail = jobDetail!!, modifier = Modifier.fillMaxSize()
                         )
+
                         1 -> ApplicantsContent(applicantList, applicantViewModel)
                     }
                 }

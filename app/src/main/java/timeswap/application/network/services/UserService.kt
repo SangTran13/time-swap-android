@@ -29,6 +29,7 @@ interface UserService {
 }
 
 class UserRepository {
+
     suspend fun getUserProfile(accessToken: String): User? {
         return withContext(Dispatchers.IO) {
             try {
@@ -64,4 +65,5 @@ class UserRepository {
             apply()
         }
     }
+
 }
