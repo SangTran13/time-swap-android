@@ -52,6 +52,7 @@ import timeswap.application.network.services.AuthServices
 
 @Composable
 fun RegisterScreen(onBackToLogin: () -> Unit) {
+
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -79,17 +80,17 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
 
     fun handleRegister() {
         if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || phoneNumber.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-            Toast.makeText(context, "All fields are required!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Tất cả các trường đều phải được điền đầy đủ!", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (!isValidVietnamPhoneNumber(phoneNumber)) {
-            Toast.makeText(context, "Invalid phone number format!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (password != confirmPassword) {
-            Toast.makeText(context, "Passwords do not match!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Mật khẩu không khớp!", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -117,7 +118,7 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
             modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Create an Account",
+                text = "Tạo tài khoản mới",
                 fontSize = 30.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
@@ -125,31 +126,31 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
             Spacer(modifier = Modifier.height(10.dp))
 
             RegisterTextField(
-                "First Name",
-                firstName,
-                { firstName = it },
-                firstNameFocusRequester,
-                lastNameFocusRequester
-            )
-            RegisterTextField(
-                "Last Name",
+                "Họ",
                 lastName,
                 { lastName = it },
                 lastNameFocusRequester,
                 emailFocusRequester
             )
             RegisterTextField(
+                "Tên",
+                firstName,
+                { firstName = it },
+                firstNameFocusRequester,
+                lastNameFocusRequester
+            )
+            RegisterTextField(
                 "Email", email, { email = it }, emailFocusRequester, phoneFocusRequester
             )
             RegisterTextField(
-                "Phone Number",
+                "Số điện thoại",
                 phoneNumber,
                 { phoneNumber = it },
                 phoneFocusRequester,
                 passwordFocusRequester
             )
             RegisterTextField(
-                "Password",
+                "Mật khẩu",
                 password,
                 { password = it },
                 passwordFocusRequester,
@@ -157,7 +158,7 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
                 true
             )
             RegisterTextField(
-                "Confirm Password",
+                "Xác nhận mật khẩu",
                 confirmPassword,
                 { confirmPassword = it },
                 confirmPasswordFocusRequester,
@@ -180,21 +181,22 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
                             true
                         } else false
                     }) {
-                Text(text = "SIGN UP", color = Color.White)
+                Text(text = "Đăng ký", color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Row {
-                Text(text = "Already have an account?", color = Color.Gray)
+                Text(text = "Bạn đã có tài khoản?", color = Color.Gray)
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "Sign in",
+                Text(text = "Đăng nhập",
                     color = Color(0xFFFFA500),
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable { onBackToLogin() })
             }
         }
     }
+
 }
 
 @Composable
@@ -235,4 +237,5 @@ fun RegisterTextField(
                 } else false
             })
     Spacer(modifier = Modifier.height(12.dp))
+
 }

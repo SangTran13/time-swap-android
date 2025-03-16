@@ -51,7 +51,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_clock),
-                    contentDescription = "Due Date",
+                    contentDescription = "Start Date",
                     modifier = Modifier.size(16.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -60,7 +60,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Start Date: ",
+                        text = "Ngày bắt đầu: ",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
@@ -92,7 +92,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Due Date: ",
+                    text = "Ngày hết hạn: ",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -109,7 +109,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Job Description", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+        Text(text = "Mô tả công việc", fontWeight = FontWeight.Bold, fontSize = 18.sp)
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
@@ -121,7 +121,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Responsibilities", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+        Text(text = "Trách nhiệm", fontWeight = FontWeight.Bold, fontSize = 18.sp)
         Spacer(modifier = Modifier.height(8.dp))
 
         responsibilities.forEach { responsibility ->
@@ -136,7 +136,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Category:",
+                text = "Danh mục:",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
@@ -153,7 +153,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Industry:",
+                text = "Ngành:",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
@@ -170,7 +170,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Fee:",
+                text = "Phí:",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
@@ -212,7 +212,7 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Full Location:",
+                text = "Địa chỉ:",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
@@ -226,4 +226,5 @@ fun JobDetailContent(jobDetail: JobDetailResponse, modifier: Modifier = Modifier
             )
         }
     }
+
 }

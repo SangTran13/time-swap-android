@@ -20,6 +20,7 @@ import timeswap.application.network.RetrofitClient
 import timeswap.application.shared.constants.AppConstants
 
 interface JobService {
+
     @POST("jobposts")
     suspend fun postJob(
         @Header("Authorization") token: String,
@@ -39,10 +40,12 @@ interface JobService {
         @Path("id") jobId: String,
         @Header("Authorization") token: String
     ): Response<BaseResponse<JobDetailResponse>>
+
 }
 
 
 class JobPostService {
+
     suspend fun getJobLists(industryId: Int?, search: String?, pageIndex: Int, pageSize: Int): JobPostResponse? {
         return withContext(Dispatchers.IO) {
             try {
@@ -108,6 +111,7 @@ class JobPostService {
             }
         }
     }
+
 }
 
 

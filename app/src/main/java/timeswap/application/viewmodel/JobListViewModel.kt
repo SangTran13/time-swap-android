@@ -13,12 +13,15 @@ import timeswap.application.network.services.JobPostService
 import timeswap.application.shared.constants.AppConstants
 
 sealed class JobListUiState {
+
     data object Loading : JobListUiState()
     data class Success(val jobList: List<JobPost>, val pageIndex: Int, val totalPages: Int) : JobListUiState()
     data class Error(val message: String) : JobListUiState()
+
 }
 
 class JobListViewModel : ViewModel() {
+
     private val jobListService = JobPostService()
 
     private val _uiState = MutableStateFlow<JobListUiState>(JobListUiState.Loading)
@@ -77,5 +80,5 @@ class JobListViewModel : ViewModel() {
             fetchJobLists()
         }
     }
-}
 
+}

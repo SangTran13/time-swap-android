@@ -42,6 +42,7 @@ interface AuthService {
         @Header("Authorization") token: String,
         @Body request: ChangePasswordRequest
     ): Response<BaseResponse<Any>>
+
 }
 
 class ForgotPasswordService {
@@ -59,12 +60,12 @@ class ForgotPasswordService {
                     if (response.isSuccessful) {
                         onSuccess()
                     } else {
-                        onError("Email does not exist!")
+                        onError("Địa chỉ email không tồn tại!")
                     }
                 }
 
                 override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
-                    onError("Can't connect to server!")
+                    onError("Không thể kết nối đến máy chủ!")
                 }
             })
     }
@@ -88,21 +89,21 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
                             val authData = response.body()?.data
                             authData?.let {
                                 saveTokens(it.accessToken, it.refreshToken, it.expiresIn)
-                                Toast.makeText(context, "Login Successful!", LENGTH_SHORT)
+                                Toast.makeText(context, "Đăng nhập thành công!", LENGTH_SHORT)
                                     .show()
                                 onSuccess()
                             }
                         } else {
-                            onError("Invalid credentials.")
+                            onError("Sai tài khoản hoặc mật khẩu!!")
                         }
                     } else {
                         val errorBody = response.errorBody()?.string()
                         val statusCode = ApiUtils.extractStatusCode(errorBody)
 
                         if (response.code() == UNAUTHORIZED && statusCode == USER_NOT_CONFIRMED) {
-                            onError("Please confirm your email before logging in.")
+                            onError("Vui lòng xác nhận email trước khi đăng nhập.")
                         } else {
-                            onError("Invalid credentials.")
+                            onError("Sai tài khoản hoặc mật khẩu!!")
                         }
                     }
                 }
@@ -138,45 +139,47 @@ class AuthServices(private val context: Context, private val sharedPreferences: 
                 call: Call<BaseResponse<Unit>>, response: Response<BaseResponse<Unit>>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(context, "Check your email to confirm!", Toast.LENGTH_LONG)
+                    Toast.makeText(context, "Kiểm tra email để xác nhận tài khoản", Toast.LENGTH_LONG)
                         .show()
                     onSuccess()
                 } else {
                     val errorMessage = try {
                         JSONObject(response.errorBody()?.string() ?: "{}").optString(
-                            "message", "Unknown error"
+                            "message", "Lỗi đăng ký"
                         )
                     } catch (e: Exception) {
-                        "Unexpected error occurred!"
+                        "Lỗi đăng ký"
                     }
                     onError(errorMessage)
                 }
             }
 
             override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
-                onError("Cannot connect to server. Check your internet!")
+                onError("Không thể kết nối đến máy chủ!")
             }
         })
     }
 
     suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit> {
         val token = sharedPreferences.getString("accessToken", "") ?: ""
-        if (token.isBlank()) return Result.failure(Exception("User is not authenticated"))
+        if (token.isBlank()) return Result.failure(Exception("Người dùng chưa đăng nhập"))
 
         return withContext(Dispatchers.IO) {
             try {
-                val response = authService.changePassword("Bearer $token", ChangePasswordRequest(currentPassword, newPassword))
+                val response = authService.changePassword(
+                    "Bearer $token",
+                    ChangePasswordRequest(currentPassword, newPassword)
+                )
                 if (response.isSuccessful && response.body()?.statusCode == 1005) {
                     Result.success(Unit)
                 } else {
-                    Result.failure(Exception(response.body()?.message ?: "Password change failed"))
+                    Result.failure(Exception(response.body()?.message ?: "Không thể thay đổi mật khẩu!!"))
                 }
             } catch (e: Exception) {
-                Result.failure(Exception("Network error: ${e.message}"))
+                Result.failure(Exception("Lỗi khi thay đổi mật khẩu: ${e.message}"))
             }
         }
     }
-
 
     private fun saveTokens(accessToken: String, refreshToken: String, expiresIn: Int) {
         with(sharedPreferences.edit()) {

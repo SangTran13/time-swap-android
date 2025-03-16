@@ -47,6 +47,7 @@ import timeswap.application.network.services.AuthServices
 
 @Composable
 fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit) {
+
     var currentPassword by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }
     var confirmNewPassword by remember { mutableStateOf("") }
@@ -60,11 +61,11 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
 
     fun handleChangePassword() {
         if (currentPassword.isBlank() || newPassword.isBlank() || confirmNewPassword.isBlank()) {
-            Toast.makeText(context, "All fields are required!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Phải điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show()
             return
         }
         if (newPassword != confirmNewPassword) {
-            Toast.makeText(context, "New passwords do not match!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Mật khẩu không khớp!", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -74,7 +75,7 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
             isLoading = false
 
             result.onSuccess {
-                Toast.makeText(context, "Password changed successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Thay đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show()
                 onPasswordChanged()
             }.onFailure { error ->
                 Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
@@ -92,16 +93,16 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
             modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Change Password",
+                text = "Đổi mật khẩu",
                 fontSize = 30.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            PasswordTextField("Current Password", currentPassword) { currentPassword = it }
-            PasswordTextField("New Password", newPassword) { newPassword = it }
-            PasswordTextField("Confirm New Password", confirmNewPassword) {
+            PasswordTextField("Mật khẩu hiện tại", currentPassword) { currentPassword = it }
+            PasswordTextField("Mật khẩu mới", newPassword) { newPassword = it }
+            PasswordTextField("Xác nhận mật khẩu mới", confirmNewPassword) {
                 confirmNewPassword = it
             }
 
@@ -119,9 +120,10 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
                 if (isLoading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text(text = "Change Password", fontSize = 16.sp, color = Color.White)
+                    Text(text = "Đổi mật khẩu", fontSize = 16.sp, color = Color.White)
                 }
             }
+
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(
@@ -136,15 +138,17 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
                 if (isLoading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text(text = "Back", fontSize = 16.sp, color = Color.White)
+                    Text(text = "Trở về", fontSize = 16.sp, color = Color.White)
                 }
             }
         }
     }
+
 }
 
 @Composable
 fun PasswordTextField(label: String, value: String, onValueChange: (String) -> Unit) {
+
     var passwordVisible by remember { mutableStateOf(false) }
 
     OutlinedTextField(
@@ -163,4 +167,5 @@ fun PasswordTextField(label: String, value: String, onValueChange: (String) -> U
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.height(12.dp))
+
 }

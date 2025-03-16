@@ -50,6 +50,7 @@ import timeswap.application.network.services.ForgotPasswordService
 fun ForgotPasswordScreen(
     onBackToLogin: () -> Unit, onResetSent: () -> Unit
 ) {
+
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
@@ -59,7 +60,7 @@ fun ForgotPasswordScreen(
 
     fun handleForgotPassword() {
         if (email.isBlank()) {
-            Toast.makeText(context, "Please enter your email!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Vui lòng nhập email!", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -68,7 +69,7 @@ fun ForgotPasswordScreen(
             email = email,
             onSuccess = {
                 isLoading = false
-                Toast.makeText(context, "Check your email to reset password!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Kiểm tra email để đặt lại mật khẩu!", Toast.LENGTH_LONG).show()
                 onResetSent()
             },
             onError = { errorMessage ->
@@ -88,7 +89,7 @@ fun ForgotPasswordScreen(
             modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Forgot Password",
+                text = "Quên mật khẩu",
                 fontSize = 30.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
@@ -96,7 +97,7 @@ fun ForgotPasswordScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "To reset your password, you need your email or mobile number that can be authenticated",
+                text = "Để đặt lại mật khẩu, vui lòng nhập địa chỉ email liên quan",
                 fontSize = 18.sp,
                 color = Color.Gray,
                 textAlign = TextAlign.Center
@@ -143,16 +144,16 @@ fun ForgotPasswordScreen(
                         } else false
                     }
             ) {
-                Text(text = "RESET PASSWORD", color = Color.White)
+                Text(text = "Gửi yêu cầu", color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Row {
-                Text(text = "Remembered your password?", color = Color.Gray)
+                Text(text = "Bạn đã nhớ mật khẩu?", color = Color.Gray)
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "Sign in",
+                    text = "Đăng nhập",
                     color = Color(0xFFFFA500),
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable { onBackToLogin() }
@@ -160,14 +161,11 @@ fun ForgotPasswordScreen(
             }
         }
     }
-}
 
+}
 
 @Preview
 @Composable
 fun PreviewForgotPasswordScreen() {
     ForgotPasswordScreen(onBackToLogin = {}, onResetSent = {})
 }
-
-
-

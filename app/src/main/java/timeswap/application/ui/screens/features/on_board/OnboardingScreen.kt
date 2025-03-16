@@ -45,14 +45,14 @@ fun OnboardingScreen(onNext: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(40.dp))
             Text(
-                text = "Find Your",
+                text = "Tìm",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 modifier = Modifier.align(Alignment.Start)
             )
             Text(
-                text = "Dream Job",
+                text = "Công việc của bạn",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFFFA500),
@@ -60,7 +60,7 @@ fun OnboardingScreen(onNext: () -> Unit) {
                 textDecoration = TextDecoration.Underline
             )
             Text(
-                text = "Here!",
+                text = "Tại đây!",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
@@ -68,7 +68,7 @@ fun OnboardingScreen(onNext: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "Explore all the most exciting job roles based on your interest and study major.",
+                text = "Khám phá tất cả các công việc thú vị nhất dựa trên sở thích và chuyên ngành học của bạn.",
                 fontSize = 18.sp,
                 color = Color.Gray
             )

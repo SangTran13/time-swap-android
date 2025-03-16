@@ -12,12 +12,15 @@ import timeswap.application.network.services.ApplicantsService
 import timeswap.application.shared.constants.AppConstants
 
 sealed class ApplicantListUiState {
+
     data object Loading : ApplicantListUiState()
     data class Success(val applicantList: List<Applicant>, val pageIndex: Int, val totalPages: Int) : ApplicantListUiState()
     data class Error(val message: String) : ApplicantListUiState()
+
 }
 
 class ApplicantViewModel(private val repository: ApplicantsService): ViewModel() {
+
     private val _uiState = MutableStateFlow<ApplicantListUiState>(ApplicantListUiState.Loading)
     val uiState: StateFlow<ApplicantListUiState> = _uiState.asStateFlow()
 
@@ -68,4 +71,5 @@ class ApplicantViewModel(private val repository: ApplicantsService): ViewModel()
             loadApplicants()
         }
     }
+
 }

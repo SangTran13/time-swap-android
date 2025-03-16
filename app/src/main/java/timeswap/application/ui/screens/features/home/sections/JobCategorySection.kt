@@ -28,8 +28,9 @@ import timeswap.application.R
 
 @Composable
 fun JobCategorySection() {
+
     Text(
-        text = "Find Your Job",
+        text = "Tìm việc làm",
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(top = 16.dp)
@@ -56,6 +57,7 @@ fun JobCategorySection() {
             JobCategoryBox("38.9k", "Part Time", Color(0xFFFFAB91))
         }
     }
+
 }
 
 @Composable
@@ -93,4 +95,5 @@ fun JobCategoryBox(
             Text(text = label, fontSize = 14.sp, color = Color.Black)
         }
     }
+
 }

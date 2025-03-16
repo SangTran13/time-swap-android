@@ -11,6 +11,7 @@ import timeswap.application.data.entity.User
 import timeswap.application.network.services.UserRepository
 
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
+
     private val _userProfile = MutableStateFlow<User?>(null)
     val userProfile: StateFlow<User?> get() = _userProfile
 
@@ -20,4 +21,5 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
             _userProfile.value = user
         }
     }
+
 }

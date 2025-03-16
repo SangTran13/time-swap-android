@@ -5,6 +5,7 @@ import timeswap.application.data.entity.Industry
 import timeswap.application.data.entity.Ward
 
 data class JobDetailResponse (
+
     val id: String,
     val userId: String,
     val ownerAvatarUrl: String,
@@ -25,4 +26,5 @@ data class JobDetailResponse (
     val ward: Ward,
     val createdAt: String,
     val modifiedAt: String?
+
 )

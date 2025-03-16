@@ -9,6 +9,7 @@ import timeswap.application.data.entity.ChatMessage
 import timeswap.application.network.services.ChatRepository
 
 class ChatViewModel : ViewModel() {
+
     private val repository = ChatRepository()
 
     private val _chatMessages = MutableStateFlow<List<ChatMessage>>(emptyList())
@@ -26,4 +27,5 @@ class ChatViewModel : ViewModel() {
             )
         }
     }
+
 }

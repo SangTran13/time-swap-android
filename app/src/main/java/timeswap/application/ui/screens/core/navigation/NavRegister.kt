@@ -49,6 +49,7 @@ import timeswap.application.viewmodel.JobListViewModel
 
 @Composable
 fun NavRegister(context: Context) {
+
     val sharedPreferences =
         remember { context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE) }
     val navController = rememberNavController()
@@ -171,4 +172,5 @@ fun NavRegister(context: Context) {
             }
         }
     }
+
 }
