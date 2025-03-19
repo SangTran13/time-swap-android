@@ -154,7 +154,7 @@ fun JobPostScreen(
                     if (response != null) {
                         Toast.makeText(context, "Đăng công việc thành công!!", Toast.LENGTH_SHORT)
                             .show()
-                        navController.popBackStack()
+                        navController.navigate("job")
                     } else {
                         Toast.makeText(context, "Tài khoản của bạn không đủ tiền để đăng công việc!!", Toast.LENGTH_SHORT).show()
                     }
