@@ -38,7 +38,7 @@ class ApplicantViewModel(private val repository: ApplicantsService): ViewModel()
         loadApplicants()
     }
 
-    private fun loadApplicants() {
+    fun loadApplicants() {
         val jobId = currentJobId ?: return
         val accessToken = currentAccessToken ?: return
 
