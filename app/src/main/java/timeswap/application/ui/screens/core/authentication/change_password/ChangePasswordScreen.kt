@@ -71,7 +71,7 @@ fun ChangePasswordScreen(onPasswordChanged: () -> Unit, onBackToHome: () -> Unit
 
         coroutineScope.launch {
             isLoading = true
-            val result = authServices.changePassword(currentPassword, newPassword)
+            val result = authServices.changePassword(currentPassword.trim(), newPassword.trim())
             isLoading = false
 
             result.onSuccess {

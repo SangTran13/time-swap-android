@@ -69,7 +69,7 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = viewMode
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(start = 8.dp, end = 8.dp, bottom = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(

@@ -101,8 +101,8 @@ fun AboutMeScreen(navController: NavController, locationViewModel: LocationViewM
             lastName = it.lastName ?: ""
             phone = it.phoneNumber ?: ""
             description = it.description ?: ""
-            selectedWard = it.ward.fullLocation ?: ""
-            selectedCity = extractCity(it.ward.fullLocation)
+            selectedWard = it.ward?.fullLocation ?: ""
+            selectedCity = extractCity(it.ward?.fullLocation)
         }
     }
 

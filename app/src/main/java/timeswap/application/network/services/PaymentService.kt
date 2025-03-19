@@ -64,7 +64,7 @@ class PaymentRepository(private val context: Context) {
                             openPaymentLink(baseResponse.data)
                             onSuccess()
                         } else {
-                            onError(baseResponse.message)
+                            onError("Thanh toán thất bại")
                         }
                     } else {
                         onError("Định dạng không hợp lệ!")
