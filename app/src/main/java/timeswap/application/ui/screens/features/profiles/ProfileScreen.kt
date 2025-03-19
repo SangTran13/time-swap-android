@@ -66,7 +66,7 @@ fun ProfileScreen(navController: NavController?) {
         ProfileSection(
             title = "Ngành nghề",
             iconRes = R.drawable.ic_major,
-            details = userProfile?.majorIndustry ?: "Không có ngành nghề chi tiết.",
+            details = userProfile?.majorIndustry?.industryName ?: "Không có ngành nghề chi tiết.",
             navController = navController,
             destinationRoute = EditMajorDestination.route
         )

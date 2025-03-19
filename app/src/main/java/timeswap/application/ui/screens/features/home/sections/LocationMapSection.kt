@@ -47,7 +47,7 @@ fun LocationMap(context: Context) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(300.dp).padding(bottom = 20.dp)
                 .clickable { isMapExpanded = true },
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
