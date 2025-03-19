@@ -63,8 +63,8 @@
 2️⃣ Open the project in **Android Studio**.  
 3️⃣ Sync **Gradle** and install dependencies.  
 4️⃣ Obtain a **Google Maps API Key** from **Google Cloud Console**.  
-5️⃣ Add your API key and other environment variables in **local.properties**:  
-
+5️⃣ Add your API key and other environment variables in **local.properties** 
+   and Add your Google Map API key in **res/values/strings.xml**:  
    ```properties
    BASE_AUTH_URL=YOUR_LINK_API
    BASE_API_URL=YOUR_LINK_API
@@ -72,8 +72,12 @@
    BASE_GPT_URL=https://api.openai.com/v1/
    KEY_GPT_API=YOUR_GPT_API_KEY
    KEY_ORGANIZATION_GPT_API=YOUR_ORGANIZATION_KEY
-   GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
-   ```  
+   ```
+   ```xml
+   <resources>
+      <string name="google_maps_api_key">YOUR_GOOGLE_MAPS_API_KEY></string>
+   </resources>
+   ```
 6️⃣ Run the project on an **emulator or real device**.  
 
 ---
@@ -102,7 +106,7 @@
 
 ## 🔗 Important Links  
 
-🔹 **APK Download**: [Download APK](https://drive.google.com/file/d/15bEXCrSZlcVg1G4HQfU_0V0UpfWr8d-E/view?usp=sharing)  
+🔹 **APK Download**: [Download APK](https://drive.google.com/file/d/1Cgywqhwm4X81bIRUnrMWpHVGWWFoky9A/view?usp=sharing)  
 
 ---
 
