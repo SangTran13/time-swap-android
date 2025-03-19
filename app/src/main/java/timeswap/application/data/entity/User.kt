@@ -9,14 +9,14 @@ data class User(
     val lastName: String,
     val phoneNumber: String,
     val role: List<String>,
-    val fullLocation: String,
+    val ward: Ward?,
     val avatarUrl: String,
     val description: String,
     val balance: Double,
-    val subscriptionPlan: Int,
+    val currentSubscription: Int,
     val subscriptionExpiryDate: String,
     val educationHistory: List<String>,
-    val majorCategory: String,
-    val majorIndustry: String
+    val majorCategory: Category?,
+    val majorIndustry: Industry?
 
 )

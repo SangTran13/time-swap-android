@@ -40,6 +40,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -47,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timeswap.application.network.services.ApplicantsService
 import timeswap.application.network.services.JobPostService
@@ -82,6 +85,9 @@ fun JobDetailScreen(
 
     val jobDetail by jobDetailViewModel.jobDetail.collectAsState()
     val applicantList by applicantViewModel.uiState.collectAsState()
+
+    var isButtonEnabled by remember { mutableStateOf(true) }
+
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -168,20 +174,33 @@ fun JobDetailScreen(
                 ) {
                     Button(
                         onClick = {
-                            coroutineScope.launch {
-                                val result = applicantsService.applyJob(accessToken, jobId!!)
-                                Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                            if (isButtonEnabled) {
+                                isButtonEnabled = false
+                                coroutineScope.launch {
+                                    val result = applicantsService.applyJob(accessToken, jobId!!)
+                                    applicantViewModel.loadApplicants()
+                                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                                    delay(5000)
+                                    isButtonEnabled = true
+                                }
+                            } else {
+                                Toast.makeText(context, "Vui lòng đợi 5 giây trước khi apply lại", Toast.LENGTH_SHORT).show()
                             }
                         },
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD5D5)),
+                        modifier = Modifier.weight(1f)
+                            .graphicsLayer {
+                                alpha = if (isButtonEnabled) 1f else 0.5f
+                            },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFFD5D5)
+                        ),
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = "Apply",
                             modifier = Modifier.size(16.dp),
-                            tint = Color(0xFFFC4646),
+                            tint = Color(0xFFFC4646)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(

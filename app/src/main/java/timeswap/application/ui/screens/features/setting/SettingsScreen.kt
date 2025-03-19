@@ -35,7 +35,7 @@ fun SettingsScreen(context: Context, navController: NavController) {
             coroutineScope.launch {
                 val user = userRepository.getUserProfile(token)
                 fullName = user?.fullName ?: "Unknown User"
-                balance = (user?.balance.toString()).toDouble()
+                balance = user?.balance ?: 0.0
             }
         }
     }

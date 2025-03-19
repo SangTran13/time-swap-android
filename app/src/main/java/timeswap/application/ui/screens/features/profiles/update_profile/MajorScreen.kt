@@ -71,8 +71,8 @@ fun MajorScreen(navController: NavController, industryCategoryViewModel: Industr
 
     LaunchedEffect(userProfile) {
         userProfile?.let {
-            selectedIndustry = it.majorIndustry ?: ""
-            selectedCategory = it.majorCategory ?: ""
+            selectedIndustry = it.majorIndustry?.industryName ?: ""
+            selectedCategory = it.majorCategory?.categoryName ?: ""
         }
     }
 
