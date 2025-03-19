@@ -35,7 +35,7 @@ import timeswap.application.ui.screens.core.navigation.SettingsDestination
 
 @Composable
 fun ProfileHeaderSection(userProfile : User?, navController: NavController? = null) {
-    val subscriptionText = when (userProfile?.subscriptionPlan) {
+    val subscriptionText = when (userProfile?.currentSubscription) {
         1 -> "Gói tiêu chuẩn"
         2 -> "Gói cao cấp"
         else -> "Gói cơ bản"
@@ -97,7 +97,7 @@ fun ProfileHeaderSection(userProfile : User?, navController: NavController? = nu
                     color = Color.White
                 )
                 Text(
-                    text = userProfile?.fullLocation ?: "Unknown",
+                    text = userProfile?.ward?.fullLocation ?: "Unknown",
                     fontSize = 14.sp,
                     color = Color.White.copy(alpha = 0.8f)
                 )

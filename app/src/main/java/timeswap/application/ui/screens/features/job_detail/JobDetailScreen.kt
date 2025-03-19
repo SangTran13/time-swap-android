@@ -170,6 +170,7 @@ fun JobDetailScreen(
                         onClick = {
                             coroutineScope.launch {
                                 val result = applicantsService.applyJob(accessToken, jobId!!)
+                                applicantViewModel.loadApplicants()
                                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
                             }
                         },
